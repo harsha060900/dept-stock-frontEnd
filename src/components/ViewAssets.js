@@ -5,9 +5,10 @@ export default function ViewAssets() {
 
 
 
-    const users = [
-        { firstName: 'Jane Cooper', lastName: 'Regional Paradigm Technician', role: 'Admin', email: 'jane.cooper@example.com' },
-        { firstName: 'Cody Fisher', lastName: 'Product Directives Officer', role: 'Owner', email: 'cody.fisher@example.com' },
+    const assets = [
+        { serialNo: 'DOM-2020-1/3', category: 'Furniture', itemName: 'Table', quantity: '3', price: '10000' },
+        { serialNo: 'DOM-2019-2/8', category: 'IT', itemName: 'Dell Laptop', quantity: '5', price: '52000' },
+        { serialNo: 'DOM-2021-17/20', category: 'Electronics', itemName: 'Tube Light', quantity: '40', price: '100' },
         // More people...
       ]
       
@@ -15,7 +16,7 @@ export default function ViewAssets() {
     return(
         <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
-            <h1 className="text-2xl font-semibold text-gray-900">View Users</h1>
+            <h1 className="text-2xl font-semibold text-gray-900">View Assets</h1>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col">
@@ -29,25 +30,31 @@ export default function ViewAssets() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            First Name
+                            Serial No
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Last Name
+                            Category
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Email
+                            Item Name
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Role
+                            Quantity
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Price
                         </th>
                         {/* <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Edit</span>
@@ -55,12 +62,13 @@ export default function ViewAssets() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => (
-                        <tr key={user.email} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.firstName}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.lastName}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
+                        {assets.map((asset, index) => (
+                        <tr key={asset.serialNo} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.serialNo}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.category}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.itemName}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.quantity}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.price}</td>
                             {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button 
                                 onClick={()=>{

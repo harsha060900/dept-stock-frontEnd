@@ -3,22 +3,10 @@
 export default function ItemsEntry() {
     return (
         <>
-        {/* <div className="hidden sm:block" aria-hidden="true">
-            <div className="py-5">
-              <div className="border-t border-gray-200" />
-            </div>
-          </div> */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-5">
             <h1 className="text-2xl font-semibold text-gray-900">Items Entry</h1>
-        </div>
-          <div className="mt-10 sm:mt-0  px-4 sm:px-6 lg:px-14">
-            {/* <div className="md:grid md:grid-cols-3 md:gap-6"> */}
-              {/* <div className="md:col-span-1">
-                <div className="px-4 sm:px-0">
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-                  <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
-                </div>
-              </div> */}
+          </div>
+          <div className="mt-0 sm:mt-2 lg:mt-8 px-4 sm:px-6 lg:px-14">
               <div className="mt-5 mx-auto md:mt-0 md:col-span-2">
                 <form action="#" method="POST">
                   <div className="shadow overflow-hidden sm:rounded-md">
@@ -35,32 +23,6 @@ export default function ItemsEntry() {
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
                         </div>
-    
-                        {/* <div className="col-span-6 sm:col-span-3">
-                          <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                            Last name
-                          </label>
-                          <input
-                            type="text"
-                            name="last-name"
-                            id="last-name"
-                            autoComplete="family-name"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                          />
-                        </div> */}
-    
-                        {/* <div className="col-span-6 sm:col-span-4">
-                          <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-                            Email address
-                          </label>
-                          <input
-                            type="text"
-                            name="email-address"
-                            id="email-address"
-                            autoComplete="email"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                          />
-                        </div> */}
     
                         <div className="col-span-6 sm:col-span-3">
                           <label htmlFor="category" className="block text-sm font-medium text-gray-700">
