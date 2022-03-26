@@ -4,6 +4,7 @@ import ViewAssets from './components/ViewAssets';
 import AddCategory from './components/AddCategory';
 import ItemsEntry from './components/ItemsEntry';
 import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route exact path = "/" element={<ViewAssets />} />
+            <Route exact path = "/Login" element={<Login />} />
             <Route exact path = "/AddCategory" element={<AddCategory />} />
             <Route exact path = "/ItemsEntry" element={<ItemsEntry />} />
             <Route exact path = "/Dashboard" element={<Dashboard />} />
