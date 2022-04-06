@@ -12,7 +12,7 @@ export default function ItemsEntry() {
                   <div className="shadow overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
-                        <div className="col-span-6 sm:col-span-3">
+                        {/* <div className="col-span-6 sm:col-span-3">
                           <label htmlFor="serial-no" className="block text-sm font-medium text-gray-700">
                             Serial number
                           </label>
@@ -22,7 +22,7 @@ export default function ItemsEntry() {
                             id="serial-no"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
-                        </div>
+                        </div> */}
     
                         <div className="col-span-6 sm:col-span-3">
                           <label htmlFor="category" className="block text-sm font-medium text-gray-700">
@@ -38,6 +38,18 @@ export default function ItemsEntry() {
                             <option>Electronics</option>
                             <option>IT</option>
                           </select>
+                        </div>
+
+                        <div className="col-span-6 sm:col-span-3">
+                          <label htmlFor="brand-name" className="block text-sm font-medium text-gray-700">
+                            Brand name
+                          </label>
+                          <input
+                            type="text"
+                            name="brand-name"
+                            id="brand-name"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -91,7 +103,7 @@ export default function ItemsEntry() {
                         type="submit"
                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
-                        Submit
+                        Next
                       </button>
                     </div>
                   </div>
