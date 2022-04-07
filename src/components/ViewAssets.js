@@ -1,16 +1,25 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 export default function ViewAssets() {
 
+    const [assets, setAssets] = useState([]);
 
-
-    const assets = [
-        { serialNo: 'DOM-2020-1/3', category: 'Furniture', itemName: 'Table', quantity: '3', price: '10000' },
-        { serialNo: 'DOM-2019-2/8', category: 'IT', itemName: 'Dell Laptop', quantity: '5', price: '52000' },
-        { serialNo: 'DOM-2021-17/20', category: 'Electronics', itemName: 'Tube Light', quantity: '40', price: '100' },
-        // More people...
-      ]
-      
+    // const assets = [
+    //     { serialNo: 'DOM-2020-1/3', category: 'Furniture', itemName: 'Table', quantity: '3', price: '10000' },
+    //     { serialNo: 'DOM-2019-2/8', category: 'IT', itemName: 'Dell Laptop', quantity: '5', price: '52000' },
+    //     { serialNo: 'DOM-2021-17/20', category: 'Electronics', itemName: 'Tube Light', quantity: '40', price: '100' },
+    //     // More people...
+    //   ]
+    useEffect(()=>{
+        axios.get("http://localhost:5000/entry")
+      .then((res)=> {
+        console.log(res.status)
+        console.log(res.data)
+        setAssets(res.data)
+      });
+    },[])
 
     return(
         <>
@@ -29,7 +38,13 @@ export default function ViewAssets() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Serial No
+                            Item Name
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Brand
                         </th>
                         <th
                             scope="col"
@@ -41,19 +56,19 @@ export default function ViewAssets() {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Item Name
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
                             Quantity
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                            Price
+                            Total Price
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Last Updated
                         </th>
                         {/* <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Edit</span>
@@ -62,12 +77,13 @@ export default function ViewAssets() {
                     </thead>
                     <tbody>
                         {assets.map((asset, index) => (
-                        <tr key={asset.serialNo} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.serialNo}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.category}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.itemName}</td>
+                        <tr key={asset.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.Item.name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.brand}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.Item.Category.name}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.quantity}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.price}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.totalprice}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{asset.updatedAt.substring(0,10)}</td>
                             {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button 
                                 onClick={()=>{

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function DisplayItemNames() {
+function DisplayItemNames({flag}) {
 
     const [items, setItems] = useState([]);
 
@@ -12,7 +12,7 @@ function DisplayItemNames() {
         console.log(res.data)
         setItems(res.data)
       });
-    },[])
+    },[flag])
 
     return(
         <>

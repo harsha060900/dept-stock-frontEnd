@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function DisplayCategories() {
+function DisplayCategories({flag}) {
 
     const [categories, setCategories] = useState([]);
-
+    
     useEffect(()=>{
         axios.get("http://localhost:5000/category")
       .then((res)=> {
@@ -12,7 +12,7 @@ function DisplayCategories() {
         console.log(res.data)
         setCategories(res.data)
       });
-    },[])
+    },[flag])
 
     return(
         <>
