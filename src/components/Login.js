@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { useState} from "react";
 import annaUnivLogo from "../images/anna_university_logo.svg";
 import dept from "../images/clg_dept.jpeg";
-import axios from "axios";
+import api from '../Axios';
 
 const Login = () => {
 
@@ -15,7 +15,8 @@ const Login = () => {
     function login(e){
         e.preventDefault();
         console.log(data);
-        axios.post("http://localhost:5000/user/login", data)
+        // axios.post("http://localhost:5000/user/login", data)
+        api.post("/user/login", data)
         .then(res=>{
             console.log(res);
             if(res.data.error){
@@ -28,8 +29,9 @@ const Login = () => {
             }
             else{
             localStorage.setItem("AuthId",res.data.accessToken);
+            localStorage.setItem("Role",res.data.user.role);
             if(localStorage.getItem("AuthId") !== "undefined"){
-            window.location.href="/ViewAssets"
+            window.location.href="/"
             }
         }
         })
