@@ -1,10 +1,13 @@
 import Navbar from './Navbar';
 
 function Layout({children}) {
+    const token = localStorage.getItem("AuthId")
     return(
         <>
-        <Navbar />
-        {children}
+        {token?
+        <Navbar />:<></>
+    }   
+    {children}
         </>
     )
 }

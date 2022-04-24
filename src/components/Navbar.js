@@ -5,7 +5,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import annaUnivLogo from "../images/anna_university_logo.svg";
 
 const navigation = [
-  { name: 'View Assets', href: '/', current: true },
+  { name: 'View Assets', href: '/ViewAssets', current: true },
   { name: 'Items Entry', href: '/ItemsEntry', current: false },
   { name: 'Add Category', href: '/AddCategory', current: false },
   { name: 'Dashboard', href: '/Dashboard', current: false },
@@ -126,7 +126,8 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                          onClick={()=>localStorage.clear()}
+                            href="/"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

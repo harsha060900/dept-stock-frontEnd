@@ -12,8 +12,9 @@ function App() {
       <Layout>
         <BrowserRouter>
           <Routes>
-            <Route exact path = "/" element={<ViewAssets />} />
-            <Route exact path = "/Login" element={<Login />} />
+          
+            <Route exact path = "/ViewAssets" element={<ViewAssets />} />
+            <Route exact path = "/" element={<Login />} />
             <Route exact path = "/AddCategory" element={<AddCategory />} />
             <Route exact path = "/ItemsEntry" element={<ItemsEntry />} />
             <Route exact path = "/Dashboard" element={<Dashboard />} />

@@ -75,7 +75,7 @@ export default function ItemsEntry() {
                       name="brand-name"
                       id="brand-name"
                       value={brandName}
-                      required
+                      // required
                       onChange={(e) => setbrandName(e.target.value)}
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
