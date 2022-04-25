@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../Axios";
 
 function DisplayCategories({flag}) {
 
     const [categories, setCategories] = useState([]);
     
     useEffect(()=>{
-        axios.get("http://localhost:5000/category")
+        api.get("/category")
       .then((res)=> {
         console.log(res.status)
         console.log(res.data)

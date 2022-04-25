@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../Axios";
 
 function DisplayItemNames({flag}) {
 
     const [items, setItems] = useState([]);
 
     useEffect(()=>{
-        axios.get("http://localhost:5000/item")
+        api.get("/item")
       .then((res)=> {
         console.log(res.status)
         console.log(res.data)

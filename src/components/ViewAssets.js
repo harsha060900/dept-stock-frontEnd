@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../Axios";
 
 
 export default function ViewAssets() {
@@ -13,7 +14,7 @@ export default function ViewAssets() {
     //     // More people...
     //   ]
     useEffect(()=>{
-        axios.get("http://localhost:5000/entry")
+        api.get("/entry")
       .then((res)=> {
         console.log(res.status)
         console.log(res.data)

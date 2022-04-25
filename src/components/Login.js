@@ -31,7 +31,7 @@ const Login = () => {
             localStorage.setItem("AuthId",res.data.accessToken);
             localStorage.setItem("Role",res.data.user.role);
             if(localStorage.getItem("AuthId") !== "undefined"){
-            window.location.href="/"
+            window.location.href="/ViewAsset"
             }
         }
         })

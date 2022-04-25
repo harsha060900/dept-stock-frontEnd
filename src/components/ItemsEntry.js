@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../Axios";
 export default function ItemsEntry() {
   const [brandName, setbrandName] = useState("");
   const [itemID, setItemID] = useState("");
@@ -14,9 +15,9 @@ export default function ItemsEntry() {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      axios
+      api
         .post(
-          "http://localhost:5000/entry",
+          "/entry",
           JSON.stringify({
             brand: brandName,
             quantity: quantityNo,
@@ -26,10 +27,7 @@ export default function ItemsEntry() {
             pageno: pageNo,
             sno: serialNo,
             consumetype: types,
-          }),
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+          })
         )
         .then((res) => {
           console.log(res.status);
@@ -42,15 +40,14 @@ export default function ItemsEntry() {
     }
   };
 
-  useEffect(()=>{
-    axios.get("http://localhost:5000/item")
-  .then((res)=> {
-    console.log(res.status)
-    console.log(res.data)
-    setItemList(res.data)
-    setItemID(res.data[0].id)
-  });
-},[])
+  useEffect(() => {
+    api.get("/item").then((res) => {
+      console.log(res.status);
+      console.log(res.data);
+      setItemList(res.data);
+      setItemID(res.data[0].id);
+    });
+  }, []);
 
   return (
     <>
@@ -97,8 +94,10 @@ export default function ItemsEntry() {
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
                       <option disabled>--Select an item--</option>
-                      {itemlist.map((item)=>(
-                        <option value={item.id} key={item.id}>{item.name}</option>
+                      {itemlist.map((item) => (
+                        <option value={item.id} key={item.id}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                   </div>
