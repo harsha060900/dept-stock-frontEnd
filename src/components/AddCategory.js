@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import DisplayCategories from "./DisplayCategories";
 import DisplayItemNames from "./DisplayItemNames";
 import api from "../Axios";
