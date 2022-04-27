@@ -5,7 +5,7 @@ import AddCategory from "./components/AddCategory";
 import ItemsEntry from "./components/ItemsEntry";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import ViewAsset from "./components/ViewAsset";
+import Dummy from "./components/Dummy";
 
 function App() {
   const role = localStorage.getItem("Role");
@@ -17,10 +17,10 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             {(function () {
               switch (role) {
-                case "superdent":
+                case "superintendent":
                   return (
                     <>
-                      <Route path="/ViewAsset" element={<ViewAssets />} />
+                      <Route path="/ViewAssets" element={<ViewAssets />} />
                       <Route path="/AddCategory" element={<AddCategory />} />
                       <Route path="/ItemsEntry" element={<ItemsEntry />} />
                       <Route path="/Dashboard" element={<Dashboard />} />
@@ -29,7 +29,7 @@ function App() {
                 case "HOD":
                   return (
                     <>
-                      <Route path="/ViewAsset" element={<ViewAsset />} />
+                      <Route path="/Dummy" element={<Dummy />} />
                       {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
                       {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
                       <Route path="/Dashboards" element={<ItemsEntry />} />
@@ -38,7 +38,7 @@ function App() {
                 case "assigner":
                   return (
                     <>
-                      <Route path="/" element={<ViewAsset />} />
+                      <Route path="/Dummy" element={<Dummy />} />
                       {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
                       {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
                       <Route path="/Dashboards" element={<ItemsEntry />} />

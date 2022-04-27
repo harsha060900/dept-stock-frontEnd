@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 import api from "../Axios";
 export default function ItemsEntry() {
   const [brandName, setbrandName] = useState("");
@@ -17,7 +18,7 @@ export default function ItemsEntry() {
     try {
       api
         .post(
-          "/entry",
+          "/item/entry",
           JSON.stringify({
             brand: brandName,
             quantity: quantityNo,
@@ -27,12 +28,18 @@ export default function ItemsEntry() {
             pageno: pageNo,
             sno: serialNo,
             consumetype: types,
-          })
+          }),
+          {
+            headers: { "Content-Type": "application/json" },
+          }
         )
         .then((res) => {
           console.log(res.status);
           if (res.status === 200) {
-            alert("New item entry completed ");
+            Swal.fire({
+              icon: 'success',
+              text: 'Items added successfully',
+            })
           }
         });
     } catch (err) {

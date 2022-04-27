@@ -14,7 +14,7 @@ export default function ViewAssets() {
     //     // More people...
     //   ]
     useEffect(()=>{
-        api.get("/entry")
+        api.get("/item/entry")
       .then((res)=> {
         console.log(res.status)
         console.log(res.data)

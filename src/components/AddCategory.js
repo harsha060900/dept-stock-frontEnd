@@ -3,6 +3,7 @@ import axios from "axios";
 import DisplayCategories from "./DisplayCategories";
 import DisplayItemNames from "./DisplayItemNames";
 import api from "../Axios";
+import Swal from 'sweetalert2';
 
 export default function AddCategory() {
   const [categoryName, setCategoryName] = useState("");
@@ -13,19 +14,26 @@ export default function AddCategory() {
 
   let handleCategorySubmit = async (e) => {
     e.preventDefault();
+    console.log(JSON.stringify({name: categoryName}))
     try {
       api
         .post(
           "/category",
           JSON.stringify({
             name: categoryName,
-          })
+          }),
+          {
+            headers: { "Content-Type": "application/json" },
+          }
         )
         .then((res) => {
           console.log(res.status);
           if (res.status === 200) {
             setFlag(!flag);
-            alert("New category added");
+            Swal.fire({
+              icon: 'success',
+              text: 'Category added successfully',
+            })
           }
         });
     } catch (err) {
@@ -51,7 +59,10 @@ export default function AddCategory() {
           console.log(res.status);
           if (res.status === 200) {
             setFlag(!flag);
-            alert("New Item added");
+            Swal.fire({
+              icon: 'success',
+              text: 'Item name added successfully',
+            })
           }
         });
     } catch (err) {
