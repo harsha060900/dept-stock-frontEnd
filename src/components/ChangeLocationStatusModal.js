@@ -34,6 +34,11 @@ export default function ChangeLocationStatusModal(props) {
             });
         } catch (err) {
           console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.error,
+          })
         }
         props.onUpdate(!props.flag)
         props.onCloseDetails(false);

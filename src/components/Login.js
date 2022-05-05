@@ -4,6 +4,7 @@ import { useState} from "react";
 import annaUnivLogo from "../images/anna_university_logo.svg";
 import dept from "../images/clg_dept.jpeg";
 import api from '../Axios';
+import { getItemFromLocalStorage, setItemOnLocalStorage } from '../SecureLS';
 
 const Login = () => {
 
@@ -19,9 +20,14 @@ const Login = () => {
         api.post("/user/login", data)
         .then(res=>{
             console.log(res);
-            localStorage.setItem("AuthId",res.data.accessToken);
-            localStorage.setItem("Role",res.data.user.role);
-            if(localStorage.getItem("AuthId") !== "undefined"){
+            setItemOnLocalStorage('AuthId', res.data.accessToken);
+            setItemOnLocalStorage('RefId', res.data.refreshToken);
+            setItemOnLocalStorage('Role', res.data.user.role);
+            // localStorage.setItem("AuthId",res.data.accessToken);
+            // localStorage.setItem("Role",res.data.user.role);
+            // if(localStorage.getItem("AuthId") !== "undefined"){
+                console.log(getItemFromLocalStorage("AuthId"));
+            if(getItemFromLocalStorage("AuthId") !== "undefined"){
             window.location.href="/ViewAssets"
         }
         })

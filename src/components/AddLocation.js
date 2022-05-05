@@ -34,6 +34,11 @@ export default function AddLocation() {
             });
         } catch (err) {
           console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.error,
+          })
         }
       };
 

@@ -1,7 +1,8 @@
+import { getItemFromLocalStorage } from '../SecureLS';
 import Navbar from './Navbar';
 
 function Layout({children}) {
-    const token = localStorage.getItem("AuthId")
+    const token = getItemFromLocalStorage("AuthId")
     return(
         <>
         {token?

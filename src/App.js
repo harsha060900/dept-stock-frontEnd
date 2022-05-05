@@ -9,14 +9,38 @@ import AcknowledgeEntry from "./components/AcknowledgeEntry";
 import StatusTracker from "./components/StatusTracker";
 import AddLocation from "./components/AddLocation";
 import ErrorPage from "./components/404ErrorPage";
+import { getItemFromLocalStorage, setItemOnLocalStorage } from "./SecureLS";
+import { useEffect } from "react";
+import api from "./Axios";
 function App() {
-  const role = localStorage.getItem("Role");
+  const role = getItemFromLocalStorage("Role");
+
+  const refresh=()=>{
+    console.log("app");
+    api.get("/getaccesstoken", {
+      headers: {
+        'authorization': getItemFromLocalStorage("RefId")
+      }
+    })
+    .then(res=>{
+        console.log(res);
+        setItemOnLocalStorage('AuthId', res.data.accessToken);
+        setItemOnLocalStorage('RefId', res.data.refreshToken);
+        // setItemOnLocalStorage('Role', res.data.user.role);
+        console.log(getItemFromLocalStorage("AuthId"));
+     })
+  }
+
+  useEffect(()=>{
+    setInterval(refresh, 15 * 60 * 1000)
+  },[])
+
   return (
     <div>
       <Layout>
         <BrowserRouter>
           <Routes>
-            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/" element={<Login />} />
             {(function () {
               switch (role) {
                 case "superintendent":
@@ -50,7 +74,7 @@ function App() {
                     </>
                   );
                 default:
-                  break;
+                  <Route path="*" element={<ErrorPage />} />
               }
             })()}
           </Routes>

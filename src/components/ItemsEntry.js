@@ -50,6 +50,11 @@ export default function ItemsEntry() {
           });
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.error,
+        })
       }
     }
   };
