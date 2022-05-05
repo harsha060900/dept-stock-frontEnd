@@ -19,24 +19,19 @@ const Login = () => {
         api.post("/user/login", data)
         .then(res=>{
             console.log(res);
-            if(res.data.error){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: res.data.error,
-                    // footer: '<a href="">Why do I have this issue?</a>'
-                  })
-            }
-            else{
             localStorage.setItem("AuthId",res.data.accessToken);
             localStorage.setItem("Role",res.data.user.role);
             if(localStorage.getItem("AuthId") !== "undefined"){
             window.location.href="/ViewAssets"
-            }
         }
         })
         .catch(err=>{
-            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data.error,
+                // footer: '<a href="">Why do I have this issue?</a>'
+              })
         })
         
     }

@@ -14,35 +14,43 @@ export default function ItemsEntry() {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      api
-        .post(
-          "/item/entry",
-          JSON.stringify({
-            brand: brandName,
-            quantity: quantityNo,
-            totalprice: priceNo,
-            itemid: itemID,
-            volumeno: volumeNo,
-            pageno: pageNo,
-            sno: serialNo,
-            consumetype: types,
-          }),
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          console.log(res.status);
-          if (res.status === 200) {
-            Swal.fire({
-              icon: 'success',
-              text: 'Items added successfully',
-            })
-          }
-        });
-    } catch (err) {
-      console.log(err);
+    if(quantityNo==='0') {
+      Swal.fire({
+        icon: 'error',
+        text: 'Quantity cannot be zero',
+      })
+    }
+    else {
+      try {
+        api
+          .post(
+            "/item/entry",
+            JSON.stringify({
+              brand: brandName,
+              quantity: quantityNo,
+              totalprice: priceNo,
+              itemid: itemID,
+              volumeno: volumeNo,
+              pageno: pageNo,
+              sno: serialNo,
+              consumetype: types,
+            }),
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          )
+          .then((res) => {
+            console.log(res.status);
+            if (res.status === 200) {
+              Swal.fire({
+                icon: 'success',
+                text: 'Items added successfully',
+              })
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

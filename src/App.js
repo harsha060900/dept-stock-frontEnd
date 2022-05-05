@@ -5,8 +5,10 @@ import AddCategory from "./components/AddCategory";
 import ItemsEntry from "./components/ItemsEntry";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import Dummy from "./components/Dummy";
-
+import AcknowledgeEntry from "./components/AcknowledgeEntry";
+import StatusTracker from "./components/StatusTracker";
+import AddLocation from "./components/AddLocation";
+import ErrorPage from "./components/404ErrorPage";
 function App() {
   const role = localStorage.getItem("Role");
   return (
@@ -24,24 +26,27 @@ function App() {
                       <Route path="/AddCategory" element={<AddCategory />} />
                       <Route path="/ItemsEntry" element={<ItemsEntry />} />
                       <Route path="/Dashboard" element={<Dashboard />} />
+                      <Route path="*" element={<ErrorPage />} />
                     </>
                   );
                 case "HOD":
                   return (
                     <>
-                      <Route path="/Dummy" element={<Dummy />} />
+                      <Route path="/ViewAssets" element={<ViewAssets />} />
                       {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
                       {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
-                      <Route path="/Dashboards" element={<ItemsEntry />} />
+                      <Route path="/Dashboard" element={<Dashboard />} />
+                      <Route path="*" element={<ErrorPage />} />
                     </>
                   );
                 case "assigner":
                   return (
                     <>
-                      <Route path="/Dummy" element={<Dummy />} />
-                      {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
-                      {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
-                      <Route path="/Dashboards" element={<ItemsEntry />} />
+                      <Route path="/ViewAssets" element={<ViewAssets />} />
+                      <Route path="/AcknowledgeEntry" element={<AcknowledgeEntry />} />
+                      <Route path="/StatusTracker" element={<StatusTracker />} />
+                      <Route path="/AddLocation" element={<AddLocation />} />
+                      <Route path="*" element={<ErrorPage />} />
                     </>
                   );
                 default:

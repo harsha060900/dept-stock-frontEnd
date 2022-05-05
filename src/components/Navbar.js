@@ -4,11 +4,25 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import annaUnivLogo from "../images/anna_university_logo.svg";
 
-const navigation = [
+const superintendentNavigation = [
   { name: 'View Assets', href: '/ViewAssets', current: true },
   { name: 'Items Entry', href: '/ItemsEntry', current: false },
   { name: 'Add Category', href: '/AddCategory', current: false },
   { name: 'Dashboard', href: '/Dashboard', current: false },
+]
+
+const hodNavigation = [
+  { name: 'View Assets', href: '/ViewAssets', current: true },
+  // { name: 'Items Entry', href: '/ItemsEntry', current: false },
+  // { name: 'Add Category', href: '/AddCategory', current: false },
+  { name: 'Dashboard', href: '/Dashboard', current: false },
+]
+
+const assignerNavigation = [
+  { name: 'View Assets', href: '/ViewAssets', current: true },
+  { name: 'Acknowledge Entry', href: '/AcknowledgeEntry', current: false },
+  { name: 'Status Tracker', href: '/StatusTracker', current: false },
+  { name: 'Add Location', href: '/AddLocation', current: false },
 ]
 
 function classNames(...classes) {
@@ -21,6 +35,8 @@ export default function Navbar() {
 
   const [current, setCurrent] = useState(window.location.pathname);
   // console.log(window.location.pathname);
+
+  const role = localStorage.getItem("Role");
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -56,7 +72,7 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {/* {superintendentNavigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -68,7 +84,69 @@ export default function Navbar() {
                       >
                         {item.name}
                       </a>
-                    ))}
+                    ))} */}
+                    {
+                      (function () {
+                        switch (role) {
+                          case "superintendent":
+                            return (
+                              <>
+                                {superintendentNavigation.map((item) => (
+                                  <a
+                                    key={item.name}
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'px-3 py-2 rounded-md text-sm font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </a>
+                                ))}
+                              </>
+                            );
+                          case "HOD":
+                            return (
+                              <>
+                                {hodNavigation.map((item) => (
+                                  <a
+                                    key={item.name}
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'px-3 py-2 rounded-md text-sm font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </a>
+                                ))}
+                              </>
+                            );
+                          case "assigner":
+                            return (
+                              <>
+                                {assignerNavigation.map((item) => (
+                                  <a
+                                    key={item.name}
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'px-3 py-2 rounded-md text-sm font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </a>
+                                ))}
+                              </>
+                            );
+                          default:
+                            break;
+                        }
+                      })()
+                    }
                   </div>
                 </div>
               </div>
@@ -105,15 +183,15 @@ export default function Navbar() {
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <div
+                            // href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
-                          </a>
+                            <h1 className='text-lg text-center font-bold'>{role==="HOD"?"HOD":role==="superintendent"?"Superintendent":"Assigner"}</h1>
+                          </div>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <a
                             href="#"
@@ -122,7 +200,7 @@ export default function Navbar() {
                             Settings
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <a
@@ -130,7 +208,7 @@ export default function Navbar() {
                             href="/login"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            <h1 className='text-md text-center text-red-500'>Sign out</h1>
                           </a>
                         )}
                       </Menu.Item>
@@ -143,7 +221,7 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map((item) => (
+              {/* {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
@@ -156,7 +234,72 @@ export default function Navbar() {
                 >
                   {item.name}
                 </Disclosure.Button>
-              ))}
+              ))} */}
+              {
+                      (function () {
+                        switch (role) {
+                          case "superintendent":
+                            return (
+                              <>
+                                {superintendentNavigation.map((item) => (
+                                  <Disclosure.Button
+                                    key={item.name}
+                                    as="a"
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'block px-3 py-2 rounded-md text-base font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </Disclosure.Button>
+                                ))}
+                              </>
+                            );
+                          case "HOD":
+                            return (
+                              <>
+                                {hodNavigation.map((item) => (
+                                  <Disclosure.Button
+                                    key={item.name}
+                                    as="a"
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'block px-3 py-2 rounded-md text-base font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </Disclosure.Button>
+                                ))}
+                              </>
+                            );
+                          case "assigner":
+                            return (
+                              <>
+                                {assignerNavigation.map((item) => (
+                                  <Disclosure.Button
+                                    key={item.name}
+                                    as="a"
+                                    href={item.href}
+                                    className={classNames(
+                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                      'block px-3 py-2 rounded-md text-base font-medium'
+                                    )}
+                                    aria-current={item.current ? 'page' : undefined}
+                                  >
+                                    {item.name}
+                                  </Disclosure.Button>
+                                ))}
+                              </>
+                            );
+                          default:
+                            break;
+                        }
+                      })()
+                    }
             </div>
           </Disclosure.Panel>
         </>
