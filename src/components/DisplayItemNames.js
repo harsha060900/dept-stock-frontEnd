@@ -1,27 +1,75 @@
 import { useEffect, useState } from "react";
 import api from "../Axios";
+import { checkArray } from "../utils/arrayCheck";
+import { MDBDataTableV5 } from "mdbreact";
 
-function DisplayItemNames({flag}) {
+function DisplayItemNames({ flag }) {
+  const [items, setItems] = useState([]);
+  const [datatable, setDatatable] = useState({
+    columns: [
+      {
+        label: "ITEM NAME",
+        field: "iname",
+        width: 150,
+        attributes: {
+          "aria-controls": "DataTable",
+          "aria-label": "Name",
+        },
+      },
+      {
+        label: "CATEGORY",
+        field: "cname",
+        width: 150,
+        attributes: {
+          "aria-controls": "DataTable",
+          "aria-label": "Name",
+        },
+      },
+    ],
+    rows: [{}],
+  });
 
-    const [items, setItems] = useState([]);
-
-    useEffect(()=>{
-        api.get("/item")
-      .then((res)=> {
-        console.log(res.status)
-        console.log(res.data)
-        setItems(res.data)
+  useEffect(() => {
+    api.get("/item").then((res) => {
+      console.log(res.status);
+      console.log(res.data);
+      setItems(res.data);
+      setDatatable({
+        ...datatable,
+        rows: res.data.map((da) => ({
+          iname: da.name,
+          cname: da.Category.name,
+        })),
       });
-    },[flag])
+    });
+  }, [flag]);
 
-    return(
-        <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="flex flex-col">
-                <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
+  return (
+    <>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                {checkArray(datatable.rows) ? (
+                  <MDBDataTableV5
+                    className="custo"
+                    hover
+                    entriesOptions={[5, 10, 15]}
+                    entries={5}
+                    pagesAmount={4}
+                    data={datatable}
+                    searchBottom={false}
+                    searchTop
+                    barReverse={true}
+                    // fullPagination
+                  />
+                ) : (
+                  <div>
+                    <h1>No data Found</h1>
+                  </div>
+                )}
+                {/* <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-300">
                             <tr>
                             <th
@@ -46,14 +94,14 @@ function DisplayItemNames({flag}) {
                             </tr>
                             ))}
                         </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
+                        </table> */}
+              </div>
             </div>
-            </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default DisplayItemNames;

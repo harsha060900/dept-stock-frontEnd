@@ -76,8 +76,8 @@ export default function AddCategory() {
 
   useEffect(() => {
     api.get("/category").then((res) => {
-      console.log(res.status);
-      console.log(res.data);
+      // console.log(res.status);
+      // console.log(res.data);
       setCategories(res.data);
       setItemCategoryId(res.data[0].id);
     });

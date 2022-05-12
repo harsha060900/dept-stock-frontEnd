@@ -17,7 +17,7 @@ export default function ViewLedgerDetailsModal(props) {
         setLedgerData(res.data.Ledger)
       });
         }
-      })
+      }, [props.show])
 
   return (
     <Transition.Root show={props.show} as={Fragment}>

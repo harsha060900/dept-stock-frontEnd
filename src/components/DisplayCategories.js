@@ -1,28 +1,66 @@
 import { useEffect, useState } from "react";
 // import axios from "axios";
 import api from "../Axios";
+import { checkArray } from "../utils/arrayCheck";
+import { MDBDataTableV5 } from "mdbreact";
 
-function DisplayCategories({flag}) {
+function DisplayCategories({ flag }) {
+  const [categories, setCategories] = useState([]);
+  const [datatable, setDatatable] = useState({
+    columns: [
+      {
+        label: "CATEGORY",
+        field: "cname",
+        width: 150,
+        attributes: {
+          "aria-controls": "DataTable",
+          "aria-label": "Name",
+        },
+      },
+    ],
+    rows: [{}],
+  });
 
-    const [categories, setCategories] = useState([]);
-    
-    useEffect(()=>{
-        api.get("/category")
-      .then((res)=> {
-        console.log(res.status)
-        console.log(res.data)
-        setCategories(res.data)
+  useEffect(() => {
+    api.get("/category").then((res) => {
+      console.log(res.status);
+      console.log(res.data);
+      setCategories(res.data);
+      setDatatable({
+        ...datatable,
+        rows: res.data.map((da) => ({
+          cname: da.name,
+        })),
       });
-    },[flag])
+    });
+  }, [flag]);
 
-    return(
-        <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="flex flex-col">
-                <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
+  return (
+    <>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                {checkArray(datatable.rows) ? (
+                  <MDBDataTableV5
+                    className="custo"
+                    hover
+                    entriesOptions={[5, 10, 15]}
+                    entries={5}
+                    pagesAmount={4}
+                    data={datatable}
+                    searchBottom={false}
+                    searchTop
+                    barReverse={true}
+                    // fullPagination
+                  />
+                ) : (
+                  <div>
+                    <h1>No data Found</h1>
+                  </div>
+                )}
+                {/* <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-300">
                             <tr>
                             <th
@@ -40,14 +78,14 @@ function DisplayCategories({flag}) {
                             </tr>
                             ))}
                         </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
+                        </table> */}
+              </div>
             </div>
-            </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default DisplayCategories;

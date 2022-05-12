@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import annaUnivLogo from "../images/anna_university_logo.svg";
+import { clearValuesOnLogout, getItemFromLocalStorage } from '../SecureLS';
 
 const superintendentNavigation = [
   { name: 'View Assets', href: '/ViewAssets', current: true },
@@ -36,7 +37,7 @@ export default function Navbar() {
   const [current, setCurrent] = useState(window.location.pathname);
   // console.log(window.location.pathname);
 
-  const role = localStorage.getItem("Role");
+  const role = getItemFromLocalStorage("Role");
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -204,7 +205,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                          onClick={()=>localStorage.clear()}
+                          onClick={()=>clearValuesOnLogout()}
                             href="/"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
