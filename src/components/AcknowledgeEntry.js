@@ -41,7 +41,15 @@ export default function AcknowledgeEntry() {
                                 'success'
                             )
                         }
-                      });
+                      })
+                      .catch (err=> {
+                        console.log("err", err.response);
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: err.response.data.errors[0].message,
+                        })
+                      })
                 }
                 catch (err) {
                     console.log(err);

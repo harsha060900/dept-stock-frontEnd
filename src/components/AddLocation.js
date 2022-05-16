@@ -31,14 +31,17 @@ export default function AddLocation() {
                   text: 'Location added successfully',
                 })
               }
-            });
+            })
+            .catch (err=> {
+              console.log("err", err.response);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data.errors[0].message,
+              })
+            })
         } catch (err) {
           console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: err.response.data.error,
-          })
         }
       };
 

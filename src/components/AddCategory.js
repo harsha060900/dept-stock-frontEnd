@@ -26,7 +26,7 @@ export default function AddCategory() {
           }
         )
         .then((res) => {
-          console.log(res.status);
+          console.log("hit",res.status);
           if (res.status === 200) {
             setFlag(!flag);
             Swal.fire({
@@ -34,14 +34,18 @@ export default function AddCategory() {
               text: 'Category added successfully',
             })
           }
-        });
-    } catch (err) {
+        })
+        .catch (err=> {
+          console.log("err", err.response);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.errors[0].message,
+          })
+        })
+    } 
+    catch(err){
       console.log(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.response.data.error,
-      })
     }
   };
 
@@ -67,10 +71,18 @@ export default function AddCategory() {
               icon: 'success',
               text: 'Item name added successfully',
             })
+            .catch (err=> {
+              console.log("err", err.response);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data.errors[0].message,
+              })
+            })
           }
         });
     } catch (err) {
-      console.log(err);
+      console.log("err", err);
     }
   };
 
