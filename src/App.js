@@ -16,24 +16,25 @@ function App() {
   const role = getItemFromLocalStorage("Role");
 
   const refresh=()=>{
-    console.log("app");
     api.get("/getaccesstoken", {
       headers: {
-        'authorization': getItemFromLocalStorage("RefId")
+        Authorization: `Bearer ${getItemFromLocalStorage("RefId")}`
       }
     })
     .then(res=>{
         console.log(res);
         setItemOnLocalStorage('AuthId', res.data.accessToken);
-        setItemOnLocalStorage('RefId', res.data.refreshToken);
+        // setItemOnLocalStorage('RefId', res.data.refreshToken);
         // setItemOnLocalStorage('Role', res.data.user.role);
         console.log(getItemFromLocalStorage("AuthId"));
      })
   }
 
   useEffect(()=>{
-    setInterval(refresh, 15 * 60 * 1000)
+    setInterval(refresh, 60 * 1000)
   },[])
+
+  console.log("app:",role);
 
   return (
     <div>

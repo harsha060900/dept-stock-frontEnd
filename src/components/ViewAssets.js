@@ -1,62 +1,56 @@
 import { useState, useEffect } from "react";
 import api from "../Axios";
 import ViewLedgerDetailsModal from "./ViewLedgerDetailsModal";
-import { MDBDataTableV5 } from "mdbreact";
 import { checkArray } from "../utils/arrayCheck";
+
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import MaterialTable from "material-table";
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
+const format = "YYYY/MM/DD";
 
 export default function ViewAssets() {
   const [assets, setAssets] = useState([]);
   const [show, setShow] = useState(false);
   const [ledgerData, setLedgerData] = useState([]);
+  const [dates, setDates] = useState([]);
 
   const [datatable, setDatatable] = useState({
     columns: [
+      { title: "Item Name", field: "iname" },
       {
-        label: "Item Name",
-        field: "iname",
-        width: 150,
-        attributes: {
-          "aria-controls": "DataTable",
-          "aria-label": "Name",
-        },
-      },
-      {
-        label: "Brand",
+        title: "Brand",
         field: "brand",
-        width: 270,
       },
       {
-        label: "Category",
+        title: "Category",
         field: "cname",
-        width: 200,
       },
       {
-        label: "Quantity",
+        title: "Quantity",
         field: "quantity",
         sort: "asc",
-        width: 100,
       },
       {
-        label: "Total Price",
+        title: "Total Price",
         field: "totalprice",
-        sort: "disabled",
-        width: 150,
       },
       {
-        label: "Last Updated",
+        title: "Last Updated",
         field: "updatedAt",
-        sort: "disabled",
-        width: 100,
       },
       {
-        label: "Ledger Details",
+        title: "Ledger Details",
         field: "ledger",
-        sort: "disabled",
-        width: 100,
+        filtering:false
       },
     ],
     rows: [{}],
   });
+
   // const assets = [
   //     { serialNo: 'DOM-2020-1/3', category: 'Furniture', itemName: 'Table', quantity: '3', price: '10000' },
   //     { serialNo: 'DOM-2019-2/8', category: 'IT', itemName: 'Dell Laptop', quantity: '5', price: '52000' },
@@ -84,7 +78,7 @@ export default function ViewAssets() {
           brand: da.brand,
           quantity: da.quantity,
           totalprice: da.totalprice,
-          updatedAt: da.updatedAt,
+          updatedAt: da.updatedAt.substring(0, 10),
           ledger: (
             <button
               className="text-indigo-600 hover:text-indigo-900"
@@ -101,7 +95,25 @@ export default function ViewAssets() {
     });
   }, []);
 
-  console.log("assets", datatable);
+  console.log(
+    "assets",
+    dates.map((dat) => dat.format())
+  );
+
+  const downloadPdf = () => {
+    const doc = new jsPDF();
+
+    doc.setFont("courier", "bold" );
+    doc.text("DEPARTMENT OF MATHEMATICS", 63, 25);
+    doc.text("Anna University",79,34)
+
+    doc.autoTable ({
+      columns:datatable.columns.map(col=>({...col,datakey:col.field})).filter(),
+      body:datatable.rows
+    })
+
+    doc.save("Assets.pdf");
+  };
 
   return (
     <>
@@ -113,12 +125,46 @@ export default function ViewAssets() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
         <h1 className="text-2xl font-semibold text-gray-900">View Assets</h1>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* --------------------- FILTER ----------------------------- */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="overflow-hidden sm:rounded-lg text-center">
+                <DatePicker
+                  value={dates}
+                  onChange={setDates}
+                  range
+                  sort
+                  format={format}
+                  calendarPosition="bottom-center"
+                  plugins={[<DatePanel />]}
+                  className="date-picker"
+                />
+                {/* <div className="px-4 py-3 sm:px-6"> */}
+                  <button
+                    type="submit"
+                    className="btn-filter inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Filter
+                  </button>
+                {/* </div> */}
+              </div>
+              {/* <ul>
+                {dates.map((date, index) => (
+                  <li key={index}>{date.format()}</li>
+                ))}
+              </ul> */}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                {checkArray(datatable.rows) ? (
+                {/* {checkArray(datatable.rows) ? (
                   <MDBDataTableV5
                     className="custo"
                     hover
@@ -134,7 +180,41 @@ export default function ViewAssets() {
                   <div>
                     <h1>No data Found</h1>
                   </div>
-                )}
+                )} */}
+                <MaterialTable
+                  title="Basic Filtering Preview"
+                  columns={datatable.columns}
+                  data={datatable.rows}
+                  options={{
+                    showTitle:false,
+                    filtering: true,
+                  }}
+                />
+                {/* {checkArray(datatable.rows) ? (
+                  <MaterialTable
+                  columns={[
+                    { title: 'Adı', field: 'name' },
+                    { title: 'Soyadı', field: 'surname' },
+                    { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+                    { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
+                  ]}
+                  data={[{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
+                  title="Demo Title"
+                />
+                ) : (
+                  <div>
+                    <h1>No data Found</h1>
+                  </div>
+                )} */}
+
+                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                  <button
+                    onClick={downloadPdf}
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Download as PDF
+                  </button>
+                </div>
               </div>
             </div>
           </div>

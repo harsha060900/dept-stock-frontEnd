@@ -132,16 +132,20 @@ export default function AcknowledgeEntry() {
                             <div className="flex justify-center">
                                 <div className="w-3/4 flex flex-col md:flex-row justify-between">
                                     <div className="my-3 md:my-2">
-                                        <h3 className="text-md font-mono font-bold my-2 text-center">Category</h3>
-                                        <h3 className="text-md text-center">{nce.Itementry.Item.Category.name}</h3>
+                                        <h4 className="text-md font-mono font-bold my-2 text-center ">Category</h4>
+                                        <h5 className="text-md text-center">{nce.Itementry.Item.Category.name}</h5>
                                     </div>
                                     <div className="my-3">
-                                        <h3 className="text-md font-mono font-bold my-2 text-center">Quantity</h3>
-                                        <h3 className="text-md text-center">{nce.Itementry.quantity}</h3>
+                                        <h4 className="text-md font-mono font-bold my-2 text-center">Quantity</h4>
+                                        <h5 className="text-md text-center">{nce.Itementry.quantity}</h5>
                                     </div>
                                     <div className="my-3">
-                                        <h3 className="text-md font-mono font-bold my-2 text-center">Total Price</h3>
-                                        <h3 className="text-md text-center">{nce.Itementry.totalprice}</h3>
+                                        <h4 className="text-md font-mono font-bold my-2 text-center">Total Price</h4>
+                                        <h5 className="text-md text-center">{nce.Itementry.totalprice}</h5>
+                                    </div>
+                                    <div className="my-3">
+                                        <h4 className="text-md font-mono font-bold my-2 text-center">Created At</h4>
+                                        <h5 className="text-md text-center">{nce.Itementry.createdAt.substring(0,10)}</h5>
                                     </div>
                                 </div>
                             </div>

@@ -20,3 +20,19 @@ code {
   padding: 11px 10px 0 10px;
   /* text-align: center; */
 }
+.btn-filter{
+  margin-left: 70px;
+}
+.date-picker{
+  color: aqua;
+  /* background-color: red; */ 
+}
+.rmdp-input{
+  /* background-color: red; */
+  width: 115%;
+  text-align: center;
+  height: 30px !important;
+}
+.date-picker input{
+  background-color: aqua;
+}

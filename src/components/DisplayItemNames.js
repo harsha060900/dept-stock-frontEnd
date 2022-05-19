@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../Axios";
 import { checkArray } from "../utils/arrayCheck";
-import { MDBDataTableV5 } from "mdbreact";
+// import { MDBDataTableV5 } from "mdbreact";
 
 function DisplayItemNames({ flag }) {
   const [items, setItems] = useState([]);
@@ -51,7 +51,7 @@ function DisplayItemNames({ flag }) {
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                {checkArray(datatable.rows) ? (
+                {/* {checkArray(datatable.rows) ? (
                   <MDBDataTableV5
                     className="custo"
                     hover
@@ -68,8 +68,8 @@ function DisplayItemNames({ flag }) {
                   <div>
                     <h1>No data Found</h1>
                   </div>
-                )}
-                {/* <table className="min-w-full divide-y divide-gray-200">
+                )} */}
+                <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-300">
                             <tr>
                             <th
@@ -94,7 +94,7 @@ function DisplayItemNames({ flag }) {
                             </tr>
                             ))}
                         </tbody>
-                        </table> */}
+                        </table>
               </div>
             </div>
           </div>
