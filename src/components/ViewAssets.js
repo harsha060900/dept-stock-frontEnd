@@ -92,7 +92,6 @@ export default function ViewAssets() {
           ),
         })),
       });
-      
     });
   }, [render]);
 
@@ -101,9 +100,9 @@ export default function ViewAssets() {
     setDates(dateObjects.map((dat) => dat.format()));
     // console.log(dateObjects.map((dat) => dat.format()));
     // setRender(!render)
-    if (dateObjects.length==0){
-      console.log("null in filter date")
-      setRender(!render)
+    if (dateObjects.length == 0) {
+      console.log("null in filter date");
+      setRender(!render);
     }
   };
 
@@ -231,6 +230,17 @@ export default function ViewAssets() {
                   </div>
                 )} */}
                 <MaterialTable
+                  icons={{
+                    Filter: () => (
+                      <span
+                        class="material-icons MuiIcon-root MuiIcon-fontSizeSmall"
+                        aria-hidden="true"
+                        title="Search"
+                      >
+                        search
+                      </span>
+                    ),
+                  }}
                   title="Basic Filtering Preview"
                   columns={datatable.columns}
                   data={datatable.rows}
