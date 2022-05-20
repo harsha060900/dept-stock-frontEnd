@@ -1,3 +1,4 @@
+import MaterialTable from "material-table";
 import { useEffect, useState } from "react";
 // import axios from "axios";
 import api from "../Axios";
@@ -9,13 +10,8 @@ function DisplayCategories({ flag }) {
   const [datatable, setDatatable] = useState({
     columns: [
       {
-        label: "CATEGORY",
+        title: "CATEGORY",
         field: "cname",
-        width: 150,
-        attributes: {
-          "aria-controls": "DataTable",
-          "aria-label": "Name",
-        },
       },
     ],
     rows: [{}],
@@ -42,6 +38,20 @@ function DisplayCategories({ flag }) {
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <MaterialTable
+                  title="Basic Filtering Preview"
+                  columns={datatable.columns}
+                  data={datatable.rows}
+                  options={{
+                    showTitle:false,
+                    headerStyle: {
+                      backgroundColor: "#c6c9d6",
+                      color: "#6b7280",
+                      fontWeight:"500px",
+                   },
+                    // filtering: true,
+                  }}
+                />
                 {/* {checkArray(datatable.rows) ? (
                   <MDBDataTableV5
                     className="custo"
@@ -60,7 +70,7 @@ function DisplayCategories({ flag }) {
                     <h1>No data Found</h1>
                   </div>
                 )} */}
-                <table className="min-w-full divide-y divide-gray-200">
+                {/* <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-300">
                             <tr>
                             <th
@@ -78,7 +88,7 @@ function DisplayCategories({ flag }) {
                             </tr>
                             ))}
                         </tbody>
-                        </table>
+                        </table> */}
               </div>
             </div>
           </div>

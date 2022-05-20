@@ -44,6 +44,11 @@ function DisplayLocations({ flag }) {
                   data={datatable.rows}
                   options={{
                     showTitle:false,
+                    headerStyle: {
+                      backgroundColor: "#c6c9d6",
+                      color: "#6b7280",
+                      fontWeight:"500px",
+                   },
                     // filtering: true,
                   }}
                 />

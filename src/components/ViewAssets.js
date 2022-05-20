@@ -17,6 +17,7 @@ export default function ViewAssets() {
   const [show, setShow] = useState(false);
   const [ledgerData, setLedgerData] = useState([]);
   const [dates, setDates] = useState([]);
+  const [render, setRender] = useState(false);
 
   const [datatable, setDatatable] = useState({
     columns: [
@@ -45,7 +46,7 @@ export default function ViewAssets() {
       {
         title: "Ledger Details",
         field: "ledger",
-        filtering:false
+        filtering: false,
       },
     ],
     rows: [{}],
@@ -73,9 +74,8 @@ export default function ViewAssets() {
         ...datatable,
         rows: res.data["datas"].map((da) => ({
           iname: da.Item.name,
-          brand: da.brand,
           cname: da.Item.Category.name,
-          brand: da.brand,
+          brand: da.brand === null ? "---" : da.brand,
           quantity: da.quantity,
           totalprice: da.totalprice,
           updatedAt: da.updatedAt.substring(0, 10),
@@ -92,25 +92,73 @@ export default function ViewAssets() {
           ),
         })),
       });
+      
     });
-  }, []);
+  }, [render]);
 
-  console.log(
-    "assets",
-    dates.map((dat) => dat.format())
-  );
+  const setLoad = (dateObjects) => {
+    // if dates[0].format()
+    setDates(dateObjects.map((dat) => dat.format()));
+    // console.log(dateObjects.map((dat) => dat.format()));
+    // setRender(!render)
+    if (dateObjects.length==0){
+      console.log("null in filter date")
+      setRender(!render)
+    }
+  };
+
+  const fliterByDate = () => {
+    api
+      .get(`http://localhost:5000/entry/year?from=${dates[0]}&to=${dates[1]}`)
+      .then((res) => {
+        console.log("filter:", res);
+        setDatatable({
+          ...datatable,
+          rows: res.data.map((info) => ({
+            iname: info.Item.name,
+            cname: info.Item.Category.name,
+            brand: info.brand === null ? "---" : info.brand,
+            quantity: info.quantity,
+            totalprice: info.totalprice,
+            updatedAt: info.updatedAt.substring(0, 10),
+            ledger: (
+              <button
+                className="text-indigo-600 hover:text-indigo-900"
+                onClick={() => {
+                  setLedgerData(info);
+                  setShow(!show);
+                }}
+              >
+                View
+              </button>
+            ),
+          })),
+        });
+      })
+      .catch((err) => {
+        console.log("filter:", err);
+      });
+  };
+
+  // console.log(
+  //   "assets",
+  //   dates.map((dat) => dat.format())
+  // );
+  console.log("dates:", dates);
 
   const downloadPdf = () => {
     const doc = new jsPDF();
 
-    doc.setFont("courier", "bold" );
+    doc.setFont("courier", "bold");
     doc.text("DEPARTMENT OF MATHEMATICS", 63, 25);
-    doc.text("Anna University",79,34)
+    doc.text("Anna University", 79, 34);
 
-    doc.autoTable ({
-      columns:datatable.columns.map(col=>({...col,datakey:col.field})).filter(),
-      body:datatable.rows
-    })
+    doc.autoTable({
+      columns: datatable.columns
+        .map((col) => ({ ...col, datakey: col.field }))
+        .filter(),
+      body: datatable.rows,
+    });
 
     doc.save("Assets.pdf");
   };
@@ -133,7 +181,13 @@ export default function ViewAssets() {
               <div className="overflow-hidden sm:rounded-lg text-center">
                 <DatePicker
                   value={dates}
-                  onChange={setDates}
+                  onChange={
+                    (dateObjects) => {
+                      // setDates
+                      setLoad(dateObjects);
+                    }
+                    // setRender(!render)
+                  }
                   range
                   sort
                   format={format}
@@ -142,19 +196,14 @@ export default function ViewAssets() {
                   className="date-picker"
                 />
                 {/* <div className="px-4 py-3 sm:px-6"> */}
-                  <button
-                    type="submit"
-                    className="btn-filter inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Filter
-                  </button>
-                {/* </div> */}
+                <button
+                  type="submit"
+                  className="btn-filter inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={fliterByDate}
+                >
+                  Filter
+                </button>
               </div>
-              {/* <ul>
-                {dates.map((date, index) => (
-                  <li key={index}>{date.format()}</li>
-                ))}
-              </ul> */}
             </div>
           </div>
         </div>
@@ -186,9 +235,9 @@ export default function ViewAssets() {
                   columns={datatable.columns}
                   data={datatable.rows}
                   options={{
-                    showTitle:false,
+                    showTitle: false,
                     filtering: true,
-                    exportButton:true
+                    exportButton: true,
                   }}
                 />
                 {/* {checkArray(datatable.rows) ? (

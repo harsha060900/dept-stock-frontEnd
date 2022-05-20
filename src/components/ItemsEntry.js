@@ -26,7 +26,7 @@ export default function ItemsEntry() {
           .post(
             "/item/entry",
             JSON.stringify({
-              brand: brandName,
+              brand: brandName==""?null:brandName,
               quantity: quantityNo,
               totalprice: priceNo,
               itemid: itemID,
