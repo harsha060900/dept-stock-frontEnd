@@ -1,39 +1,39 @@
-import { useState } from 'react'
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { useState } from "react";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import annaUnivLogo from "../images/anna_university_logo.svg";
-import { clearValuesOnLogout, getItemFromLocalStorage } from '../SecureLS';
+import { clearValuesOnLogout, getItemFromLocalStorage } from "../SecureLS";
 
 const superintendentNavigation = [
-  { name: 'View Assets', href: '/ViewAssets', current: true },
-  { name: 'Items Entry', href: '/ItemsEntry', current: false },
-  { name: 'Add Category', href: '/AddCategory', current: false },
-  { name: 'Dashboard', href: '/Dashboard', current: false },
-]
+  { name: "View Assets", href: "/ViewAssets", current: true },
+  { name: "Items Entry", href: "/ItemsEntry", current: false },
+  { name: "Add Category", href: "/AddCategory", current: false },
+  // { name: "Dashboard", href: "/Dashboard", current: false },
+];
 
 const hodNavigation = [
-  { name: 'View Assets', href: '/ViewAssets', current: true },
+  { name: "View Assets", href: "/ViewAssets", current: true },
+  { name: "Staff History", href: "/StaffHistoryTracker", current: false },
+  { name: "Item History", href: "/ItemHistoryTracker", current: false },
+  { name: "Add Staff", href: "/AddStaff", current: false },
   // { name: 'Items Entry', href: '/ItemsEntry', current: false },
   // { name: 'Add Category', href: '/AddCategory', current: false },
-  { name: 'Dashboard', href: '/Dashboard', current: false },
-]
+  { name: "Dashboard", href: "/Dashboard", current: false },
+];
 
 const assignerNavigation = [
-  { name: 'View Assets', href: '/ViewAssets', current: true },
-  { name: 'Acknowledge Entry', href: '/AcknowledgeEntry', current: false },
-  { name: 'Status Tracker', href: '/StatusTracker', current: false },
-  { name: 'Add Location', href: '/AddLocation', current: false },
-]
+  { name: "View Assets", href: "/ViewAssets", current: true },
+  { name: "Acknowledge Entry", href: "/AcknowledgeEntry", current: false },
+  { name: "Status Tracker", href: "/StatusTracker", current: false },
+  { name: "Add Location", href: "/AddLocation", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-
-
 export default function Navbar() {
-
   const [current, setCurrent] = useState(window.location.pathname);
   // console.log(window.location.pathname);
 
@@ -69,7 +69,9 @@ export default function Navbar() {
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                     alt="Workflow"
                   /> */}
-                  <h1 className='hidden lg:block text-white font-mono text-xl mr-10'>Department Asset Management</h1>
+                  <h1 className="hidden lg:block text-white font-mono text-xl mr-10">
+                    Department Asset Management
+                  </h1>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
@@ -86,68 +88,78 @@ export default function Navbar() {
                         {item.name}
                       </a>
                     ))} */}
-                    {
-                      (function () {
-                        switch (role) {
-                          case "superintendent":
-                            return (
-                              <>
-                                {superintendentNavigation.map((item) => (
-                                  <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'px-3 py-2 rounded-md text-sm font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </a>
-                                ))}
-                              </>
-                            );
-                          case "HOD":
-                            return (
-                              <>
-                                {hodNavigation.map((item) => (
-                                  <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'px-3 py-2 rounded-md text-sm font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </a>
-                                ))}
-                              </>
-                            );
-                          case "assigner":
-                            return (
-                              <>
-                                {assignerNavigation.map((item) => (
-                                  <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'px-3 py-2 rounded-md text-sm font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </a>
-                                ))}
-                              </>
-                            );
-                          default:
-                            break;
-                        }
-                      })()
-                    }
+                    {(function () {
+                      switch (role) {
+                        case "superintendent":
+                          return (
+                            <>
+                              {superintendentNavigation.map((item) => (
+                                <a
+                                  key={item.name}
+                                  href={item.href}
+                                  className={classNames(
+                                    item.href === current
+                                      ? "bg-gray-900 text-white"
+                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                    "px-3 py-2 rounded-md text-sm font-medium"
+                                  )}
+                                  aria-current={
+                                    item.current ? "page" : undefined
+                                  }
+                                >
+                                  {item.name}
+                                </a>
+                              ))}
+                            </>
+                          );
+                        case "HOD":
+                          return (
+                            <>
+                              {hodNavigation.map((item) => (
+                                <a
+                                  key={item.name}
+                                  href={item.href}
+                                  className={classNames(
+                                    item.href === current
+                                      ? "bg-gray-900 text-white"
+                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                    "px-3 py-2 rounded-md text-sm font-medium"
+                                  )}
+                                  aria-current={
+                                    item.current ? "page" : undefined
+                                  }
+                                >
+                                  {item.name}
+                                </a>
+                              ))}
+                            </>
+                          );
+                        case "assigner":
+                          return (
+                            <>
+                              {assignerNavigation.map((item) => (
+                                <a
+                                  key={item.name}
+                                  href={item.href}
+                                  className={classNames(
+                                    item.href === current
+                                      ? "bg-gray-900 text-white"
+                                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                    "px-3 py-2 rounded-md text-sm font-medium"
+                                  )}
+                                  aria-current={
+                                    item.current ? "page" : undefined
+                                  }
+                                >
+                                  {item.name}
+                                </a>
+                              ))}
+                            </>
+                          );
+                        default:
+                          break;
+                      }
+                    })()}
                   </div>
                 </div>
               </div>
@@ -186,9 +198,18 @@ export default function Navbar() {
                         {({ active }) => (
                           <div
                             // href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
-                            <h1 className='text-lg text-center font-bold'>{role==="HOD"?"HOD":role==="superintendent"?"Superintendent":"Assigner"}</h1>
+                            <h1 className="text-lg text-center font-bold">
+                              {role === "HOD"
+                                ? "HOD"
+                                : role === "superintendent"
+                                ? "Superintendent"
+                                : "Assigner"}
+                            </h1>
                           </div>
                         )}
                       </Menu.Item>
@@ -205,11 +226,16 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                          onClick={()=>clearValuesOnLogout()}
+                            onClick={() => clearValuesOnLogout()}
                             href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 text-center')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 text-center"
+                            )}
                           >
-                            <span className='text-md text-center text-red-500'>Sign out</span>
+                            <span className="text-md text-center text-red-500">
+                              Sign out
+                            </span>
                           </a>
                         )}
                       </Menu.Item>
@@ -236,75 +262,79 @@ export default function Navbar() {
                   {item.name}
                 </Disclosure.Button>
               ))} */}
-              {
-                      (function () {
-                        switch (role) {
-                          case "superintendent":
-                            return (
-                              <>
-                                {superintendentNavigation.map((item) => (
-                                  <Disclosure.Button
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'block px-3 py-2 rounded-md text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </Disclosure.Button>
-                                ))}
-                              </>
-                            );
-                          case "HOD":
-                            return (
-                              <>
-                                {hodNavigation.map((item) => (
-                                  <Disclosure.Button
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'block px-3 py-2 rounded-md text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </Disclosure.Button>
-                                ))}
-                              </>
-                            );
-                          case "assigner":
-                            return (
-                              <>
-                                {assignerNavigation.map((item) => (
-                                  <Disclosure.Button
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    className={classNames(
-                                      item.href === current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                      'block px-3 py-2 rounded-md text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                  >
-                                    {item.name}
-                                  </Disclosure.Button>
-                                ))}
-                              </>
-                            );
-                          default:
-                            break;
-                        }
-                      })()
-                    }
+              {(function () {
+                switch (role) {
+                  case "superintendent":
+                    return (
+                      <>
+                        {superintendentNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className={classNames(
+                              item.href === current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "block px-3 py-2 rounded-md text-base font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </>
+                    );
+                  case "HOD":
+                    return (
+                      <>
+                        {hodNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className={classNames(
+                              item.href === current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "block px-3 py-2 rounded-md text-base font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </>
+                    );
+                  case "assigner":
+                    return (
+                      <>
+                        {assignerNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            as="a"
+                            href={item.href}
+                            className={classNames(
+                              item.href === current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "block px-3 py-2 rounded-md text-base font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Disclosure.Button>
+                        ))}
+                      </>
+                    );
+                  default:
+                    break;
+                }
+              })()}
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
-  )
+  );
 }

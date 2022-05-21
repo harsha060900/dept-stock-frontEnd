@@ -296,6 +296,12 @@ export default function StatusTracker() {
                       </th>
                       <th
                         scope="col"
+                        className="w-2/12 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Staff
+                      </th>
+                      <th
+                        scope="col"
                         className="w-1/12 px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Status
@@ -334,6 +340,9 @@ export default function StatusTracker() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {item.Location === null ? "---" : item.Location.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {item.Staff === null ? "---" : item.Staff.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {getStatusBadgeInTable(item.status)}

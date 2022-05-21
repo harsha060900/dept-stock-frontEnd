@@ -71,16 +71,17 @@ export default function AddCategory() {
               icon: 'success',
               text: 'Item name added successfully',
             })
-            .catch (err=> {
-              console.log("err", err.response);
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.response.data.errors[0].message,
-              })
-            })
+            
           }
-        });
+        })
+        .catch (err=> {
+          console.log("err", err.response);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.errors[0].message,
+          })
+        })
     } catch (err) {
       console.log("err", err);
     }

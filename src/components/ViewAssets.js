@@ -47,6 +47,7 @@ export default function ViewAssets() {
         title: "Ledger Details",
         field: "ledger",
         filtering: false,
+        export: false
       },
     ],
     rows: [{}],
@@ -93,6 +94,7 @@ export default function ViewAssets() {
         })),
       });
     });
+    console.log("executing");
   }, [render]);
 
   const setLoad = (dateObjects) => {
@@ -233,7 +235,7 @@ export default function ViewAssets() {
                   icons={{
                     Filter: () => (
                       <span
-                        class="material-icons MuiIcon-root MuiIcon-fontSizeSmall"
+                        className="material-icons MuiIcon-root MuiIcon-fontSizeSmall"
                         aria-hidden="true"
                         title="Search"
                       >
@@ -241,13 +243,16 @@ export default function ViewAssets() {
                       </span>
                     ),
                   }}
-                  title="Basic Filtering Preview"
+                  title="Department Of Mathematics"
                   columns={datatable.columns}
                   data={datatable.rows}
                   options={{
                     showTitle: false,
                     filtering: true,
-                    exportButton: true,
+                    exportButton: {
+                      csv:false,
+                      pdf:true
+                    },
                   }}
                 />
                 {/* {checkArray(datatable.rows) ? (

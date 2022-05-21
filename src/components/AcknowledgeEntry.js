@@ -90,7 +90,14 @@ export default function AcknowledgeEntry() {
                                 'success'
                             )
                         }
-                      });
+                      })
+                      .catch(err=>{
+                        Swal.fire({
+                          icon: "error",
+                          title: "Oops...",
+                          text: err.response.data.error,
+                        });
+                      })
                 }
                 catch (err) {
                     console.log(err);

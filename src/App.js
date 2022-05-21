@@ -9,6 +9,9 @@ import AcknowledgeEntry from "./components/AcknowledgeEntry";
 import StatusTracker from "./components/StatusTracker";
 import AddLocation from "./components/AddLocation";
 import ErrorPage from "./components/404ErrorPage";
+import AddStaff from "./components/AddStaff";
+import ItemHistoryTracker from "./components/ItemHistoryTracker";
+import StaffHistoryTracker from "./components/StaffHistoryTracker";
 import { getItemFromLocalStorage, setItemOnLocalStorage } from "./SecureLS";
 import { useEffect } from "react";
 import api from "./Axios";
@@ -61,6 +64,9 @@ function App() {
                       {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
                       {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
                       <Route path="/Dashboard" element={<Dashboard />} />
+                      <Route path="/AddStaff" element={<AddStaff />} />
+                      <Route path="/ItemHistoryTracker" element={<ItemHistoryTracker />} />
+                      <Route path="/StaffHistoryTracker" element={<StaffHistoryTracker />} />
                       <Route path="*" element={<ErrorPage />} />
                     </>
                   );
