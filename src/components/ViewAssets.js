@@ -19,39 +19,38 @@ export default function ViewAssets() {
   const [dates, setDates] = useState([]);
   const [render, setRender] = useState(false);
 
-  const [datatable, setDatatable] = useState({
-    columns: [
-      { title: "Item Name", field: "iname" },
-      {
-        title: "Brand",
-        field: "brand",
-      },
-      {
-        title: "Category",
-        field: "cname",
-      },
-      {
-        title: "Quantity",
-        field: "quantity",
-        sort: "asc",
-      },
-      {
-        title: "Total Price",
-        field: "totalprice",
-      },
-      {
-        title: "Last Updated",
-        field: "updatedAt",
-      },
-      {
-        title: "Ledger Details",
-        field: "ledger",
-        filtering: false,
-        export: false
-      },
-    ],
-    rows: [{}],
-  });
+  const columns = [
+    { title: "Item Name", field: "iname" },
+    {
+      title: "Brand",
+      field: "brand",
+    },
+    {
+      title: "Category",
+      field: "cname",
+    },
+    {
+      title: "Quantity",
+      field: "quantity",
+      sort: "asc",
+    },
+    {
+      title: "Total Price",
+      field: "totalprice",
+    },
+    {
+      title: "Last Updated",
+      field: "updatedAt",
+    },
+    {
+      title: "Ledger Details",
+      field: "ledger",
+      filtering: false,
+      export: false,
+    },
+  ];
+
+  const [datatable, setDatatable] = useState({});
 
   // const assets = [
   //     { serialNo: 'DOM-2020-1/3', category: 'Furniture', itemName: 'Table', quantity: '3', price: '10000' },
@@ -72,7 +71,6 @@ export default function ViewAssets() {
       console.log(res.status);
       console.log(res.data["datas"]);
       setDatatable({
-        ...datatable,
         rows: res.data["datas"].map((da) => ({
           iname: da.Item.name,
           cname: da.Item.Category.name,
@@ -94,7 +92,6 @@ export default function ViewAssets() {
         })),
       });
     });
-    console.log("executing");
   }, [render]);
 
   const setLoad = (dateObjects) => {
@@ -113,6 +110,7 @@ export default function ViewAssets() {
       .get(`http://localhost:5000/entry/year?from=${dates[0]}&to=${dates[1]}`)
       .then((res) => {
         console.log("filter:", res);
+        // setDatatable({...datatable.columns})
         setDatatable({
           ...datatable,
           rows: res.data.map((info) => ({
@@ -244,14 +242,14 @@ export default function ViewAssets() {
                     ),
                   }}
                   title="Department Of Mathematics"
-                  columns={datatable.columns}
+                  columns={columns}
                   data={datatable.rows}
                   options={{
                     showTitle: false,
                     filtering: true,
                     exportButton: {
-                      csv:false,
-                      pdf:true
+                      csv: false,
+                      pdf: true,
                     },
                   }}
                 />

@@ -5,14 +5,17 @@ import annaUnivLogo from "../images/anna_university_logo.svg";
 import dept from "../images/clg_dept.jpeg";
 import api from '../Axios';
 import { getItemFromLocalStorage, setItemOnLocalStorage } from '../SecureLS';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const nav = useNavigate();
 
     const[data, setData] =  useState({
         email:'',
         password:''
     })
 
+    console.log("nav:", nav );
     function login(e){
         e.preventDefault();
         console.log(data);
