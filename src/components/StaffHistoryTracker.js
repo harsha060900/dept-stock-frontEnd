@@ -172,7 +172,7 @@ export default function StaffHistoryTracker() {
                                             {staffhis.Itemstatus.Itementry.Ledger.volumeno}/PG
                                             {staffhis.Itemstatus.Itementry.Ledger.pageno}/SNo
                                             {staffhis.Itemstatus.Itementry.Ledger.sno}/
-                                            {staffhis.Itemstatus.createdAt.substring(0,4)}/
+                                            {staffhis.Itemstatus.Itementry.createdAt.substring(0,4)}/
                                             {staffhis.Itemstatus.itemno}/
                                             {staffhis.Itemstatus.Itementry.quantity}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{staffhis.Itemstatus.Itementry.Item.name}</td>

@@ -107,9 +107,9 @@ export default function ChangeLocationStatusModal(props) {
               <h1 className="text-xl text-center mb-4">
                 Change Status/Location Details
               </h1>
-              <h1 className="text-xl text-center font-bold mb-4">
+              <h5 className="text-md text-center font-bold mb-4">
                 {props.modalName}
-              </h1>
+              </h5>
               {/* {modalData==[]?null:
             (<h1 className='text-xl text-center font-bold mb-4'>
                 DOM/{modalData.createdAt.substring(0,4)}/

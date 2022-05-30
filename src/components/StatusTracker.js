@@ -79,6 +79,7 @@ export default function StatusTracker() {
   useEffect(() => {
     api.get(query).then((res) => {
       setItemStatuses(res.data);
+      console.log(res.data);
     });
   }, [query, status, flag]);
 
@@ -304,6 +305,12 @@ export default function StatusTracker() {
                         scope="col"
                         className="w-1/12 px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
+                        Updated At
+                      </th>
+                      <th
+                        scope="col"
+                        className="w-1/12 px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
                         Status
                       </th>
                       <th
@@ -329,7 +336,7 @@ export default function StatusTracker() {
                           {item.Itementry.Ledger.volumeno}/PG
                           {item.Itementry.Ledger.pageno}/SNo
                           {item.Itementry.Ledger.sno}/
-                          {item.createdAt.substring(0, 4)}/{item.itemno}/
+                          {item.Itementry.createdAt.substring(0, 4)}/{item.itemno}/
                           {item.Itementry.quantity}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -343,6 +350,9 @@ export default function StatusTracker() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {item.Staff === null ? "---" : item.Staff.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {item.updatedAt.substring(0,10)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {getStatusBadgeInTable(item.status)}
@@ -367,7 +377,7 @@ export default function StatusTracker() {
                                   "/SNo" +
                                   item.Itementry.Ledger.sno +
                                   "/" +
-                                  item.createdAt.substring(0, 4) +
+                                  item.Itementry.createdAt.substring(0, 4) +
                                   "/" +
                                   item.itemno +
                                   "/" +

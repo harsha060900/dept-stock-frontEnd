@@ -131,7 +131,16 @@ export default function AcknowledgeEntry() {
                 <div key={nce.id} className="flex justify-center my-5">
                     <div className="flex flex-col md:flex-row block p-6 rounded-lg shadow-lg bg-white w-full mx-6 sm:mx-10 lg:mx-16">
                         <div className="xs:w-12/12 md:w-11/12">
-                            <h1 className="text-gray-900 text-xl leading-tight font-medium mb-2 text-center">{nce.Itementry.Item.name}</h1>
+                            <h1 className="text-gray-900 text-xl leading-tight font-medium mb-2 text-center">{nce.Itementry.Item.name}
+                              &nbsp;
+                              <span className="text-sm font-medium">&#40;VOL
+                                  {nce.volumeno}
+                                  /PG
+                                  {nce.pageno}
+                                  /SNo
+                                  {nce.sno}&#41;
+                            </span>
+                                  </h1>
                             {/* <p className="text-gray-700 text-base mb-4">
                             Some quick example text to build on the card title and make up the bulk of the card's
                             content.

@@ -39,8 +39,8 @@ export default function ViewAssets() {
       field: "totalprice",
     },
     {
-      title: "Last Updated",
-      field: "updatedAt",
+      title: "Created At",
+      field: "createdAt",
     },
     {
       title: "Ledger Details",
@@ -68,16 +68,16 @@ export default function ViewAssets() {
   // };
   useEffect(() => {
     api.get("/item/entry").then((res) => {
-      console.log(res.status);
-      console.log(res.data["datas"]);
+      // console.log(res.status);
+      console.log(res.data);
       setDatatable({
-        rows: res.data["datas"].map((da) => ({
+        rows: res.data.map((da) => ({
           iname: da.Item.name,
           cname: da.Item.Category.name,
           brand: da.brand === null ? "---" : da.brand,
           quantity: da.quantity,
           totalprice: da.totalprice,
-          updatedAt: da.updatedAt.substring(0, 10),
+          createdAt: da.createdAt.substring(0, 10),
           ledger: (
             <button
               className="text-indigo-600 hover:text-indigo-900"
@@ -119,7 +119,7 @@ export default function ViewAssets() {
             brand: info.brand === null ? "---" : info.brand,
             quantity: info.quantity,
             totalprice: info.totalprice,
-            updatedAt: info.updatedAt.substring(0, 10),
+            createdAt: info.createdAt.substring(0, 10),
             ledger: (
               <button
                 className="text-indigo-600 hover:text-indigo-900"
@@ -143,7 +143,7 @@ export default function ViewAssets() {
   //   "assets",
   //   dates.map((dat) => dat.format())
   // );
-  console.log("dates:", dates);
+  console.log("dates:", datatable);
 
   const downloadPdf = () => {
     const doc = new jsPDF();
