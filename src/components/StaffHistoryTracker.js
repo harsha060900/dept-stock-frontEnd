@@ -9,6 +9,30 @@ export default function StaffHistoryTracker() {
     const [staffs, setStaffs] = useState([]);
     const [url, setUrl] = useState("");
     const [flag, setFlag] = useState(false);
+    const [datatable, setDatatable] = useState({});
+    const columns = [
+        { title: "ITEM ID", field: "itemid" },
+        {
+          title: "ITEM NAME",
+          field: "iname",
+        },
+        {
+          title: "CATEGORY",
+          field: "cate",
+        },
+        {
+          title: "LOCATION",
+          field: "loc",
+        },
+        {
+          title: "STATUS",
+          field: "status",
+        },
+        {
+          title: "UPDATED AT",
+          field: "upAt",
+        },
+      ];
 
     function getStatusBadgeInTable(value) {
         switch(value) {
@@ -48,6 +72,18 @@ export default function StaffHistoryTracker() {
             console.log(res.status)
             console.log(res.data)
             setStaffHistory(res.data)
+            setDatatable({
+                rows: res.data.map((da) => ({
+                  itid: da.Staff.regid,
+                  iname: da.Staff.name,
+                //   cate:
+                  loc: da.Location.name,
+                  status: getStatusBadgeInTable(da.paststatus),
+                  quantity: da.quantity,
+                  totalprice: da.totalprice,
+                  upAt: da.updatedAt,
+                })),
+              });
         });
         }
     },[flag, url])
@@ -123,6 +159,19 @@ export default function StaffHistoryTracker() {
                 <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    {/* <MaterialTable
+                  columns={columns}
+                  data={datatable.rows}
+                  options={{
+                    showTitle: false,
+                    headerStyle: {
+                      backgroundColor: "#c6c9d6",
+                      color: "#6b7280",
+                      fontWeight: "500px",
+                    },
+                    // filtering: true,
+                  }}
+                /> */}
                         <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                             <tr>
