@@ -36,3 +36,7 @@ code {
 .date-picker input{
   background-color: aqua;
 }
+
+.MuiIconButton-root:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
