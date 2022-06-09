@@ -1,9 +1,10 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, RadialLinearScale } from 'chart.js';
-import { Pie, Line, PolarArea } from 'react-chartjs-2';
+import { Pie, Line } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, ArcElement, Tooltip, Legend, RadialLinearScale);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, ArcElement, Tooltip, Legend);
 
+var delayed;
 export const options = {
     responsive: true,
     plugins: {
@@ -15,40 +16,60 @@ export const options = {
             display: true,
             text: 'Expenses',
             font: {
-                size: 18,
+                size: 22,
                 family: "courier"
-            }
+            },
         },
     },
-};
-export const options1 = {
-    responsive: true,
-    plugins: {
-        legend: {
-            display: false
-            // position: 'right', 
-            // align:'center',
-            // labels : {
-            //     padding:20
-            // }
+    animation: {
+        onComplete: () => {
+            delayed = true;
         },
-        title: {
-            display: true,
-            text: 'Categories',
-            font: {
-                size: 18,
-                family: "courier",
-                weight: 'bold',
+        delay: (context) => {
+            let delay = 0;
+            if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                delay = context.dataIndex * 300 + context.datasetIndex * 100;
             }
+            return delay;
         },
+    },
+    scales: {
+        x: {
+            stacked: true,
+        },
+        y: {
+            stacked: true
+        }
     }
-}
+};
+// export const options1 = {
+//     responsive: true,
+//     plugins: {
+//         legend: {
+//             display: false
+//             // position: 'right', 
+//             // align:'center',
+//             // labels : {
+//             //     padding:20
+//             // }
+//         },
+//         title: {
+//             display: true,
+//             text: 'Categories',
+//             font: {
+//                 size: 18,
+//                 family: "courier",
+//                 weight: 'bold',
+//             }
+//         },
+//     }
+// }
 export const options2 = {
     responsive: true,
     plugins: {
         legend: {
             position: 'bottom',
-            align: 'start',
+            align: 'center',
             labels: {
                 padding: 20
             }
@@ -56,9 +77,9 @@ export const options2 = {
         title: {
             display: true,
             text: 'Asset Status',
-            position:'top',
+            position: 'top',
             font: {
-                size: 18,
+                size: 22,
                 family: "courier",
                 weight: 'bold'
             }
@@ -72,71 +93,56 @@ export const options2 = {
     //     }
     //   }
 }
+
 export const data1 = {
     labels: ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021'],
     datasets: [
         {
             data: [2000, 3000, 5000, 4000, 8000, 6000, 1500, 6400, 9300, 5600, 2300, 4700],
             borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            fill: false
 
         },
     ],
 };
 
+
+var palette = [
+    'rgb(255, 159, 64,0.7)',
+    'rgb(204, 41, 41,0.7)',
+    'rgb(0, 163, 51,0.7)',
+    'rgb(54, 162, 235,0.7)',
+    'rgb(153, 102, 255,0.7)',
+    'rgb(0, 143, 145,0.7)',
+    'rgb(0,0,255,0.7)'
+   ];
 export const data3 = {
     labels: ['Assigned', 'Not Assigned', 'Condemned', 'Missing', 'Spare', 'Transferred'],
     datasets: [
         {
             label: '# of Votes',
-            data: [1000, 457, 50, 12, 49, 87],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
+            data: [1000, 457, 250, 120, 149, 387],
+            backgroundColor: function(context) {
+                return palette[context.dataIndex % palette.length];
+              },             
+            borderWidth:4.5,
         },
     ],
 };
 
-export const data2 = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-        {
-            label: '# of Votes',
-            data: [12, 19, 3, 5],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-        },
-    ],
-};
+// export const data2 = {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [
+//         {
+//             label: '# of Votes',
+//             data: [12, 19, 3, 5, 20, 8, 15, 6],
+//             backgroundColor: function(context) {
+//                 return palette[context.dataIndex % palette.length];
+//               },             
+//             borderWidth: 4,
+//         },
+//     ],
+// };
 
 export default function Dashboard() {
     return (
@@ -206,11 +212,11 @@ export default function Dashboard() {
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <div className='flex justify-center items-center'>
+                {/* <div className='flex justify-center items-center'>
                     <div className='w-7/12'>
                         <Pie options={options1} data={data2} />
                     </div>
-                </div>
+                </div> */}
 
                 <div className='py-5 px-4 flex justify-center items-center'>
                     <div className='w-full'>
