@@ -15,6 +15,7 @@ import StaffHistoryTracker from "./components/StaffHistoryTracker";
 import { getItemFromLocalStorage, setItemOnLocalStorage } from "./SecureLS";
 import { useEffect } from "react";
 import api from "./Axios";
+import ForgetPassword from "./components/ForgetPassword";
 function App() {
   const role = getItemFromLocalStorage("Role");
 
@@ -34,7 +35,7 @@ function App() {
   }
 
   useEffect(()=>{
-    setInterval(refresh, 60 * 1000)
+    setInterval(refresh, 15 * 60 * 1000)
   },[])
 
   console.log("app:",role);
@@ -45,6 +46,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route exact path="/" element={<Login />} />
+            <Route exact path="/forgetPassword" element={<ForgetPassword />} />
             {(function () {
               switch (role) {
                 case "superintendent":

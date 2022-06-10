@@ -34,7 +34,8 @@ function DisplayCategories({ flag }) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Delete!'
-    }).then((result) => {
+    })
+    .then((result) => {
       if (result.isConfirmed) {
           try {
               api

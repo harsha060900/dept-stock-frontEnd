@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 import api from "../Axios";
 import ViewLedgerDetailsModal from "./ViewLedgerDetailsModal";
-import { checkArray } from "../utils/arrayCheck";
-
-import DatePicker, { DateObject } from "react-multi-date-picker";
+// import { checkArray } from "../utils/arrayCheck";
+import annaUnivLogo from "../images/logo.jpeg";
+import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import MaterialTable from "material-table";
 
@@ -13,7 +13,10 @@ import "jspdf-autotable";
 const format = "YYYY/MM/DD";
 
 export default function ViewAssets() {
-  const [assets, setAssets] = useState([]);
+  // const tableRef = useRef();
+
+  // console.log('tabRef', tableRef.current?.dataManager?.data);
+  // const [assets, setAssets] = useState([]);
   const [show, setShow] = useState(false);
   const [ledgerData, setLedgerData] = useState([]);
   const [dates, setDates] = useState([]);
@@ -46,7 +49,31 @@ export default function ViewAssets() {
       title: "Ledger Details",
       field: "ledger",
       filtering: false,
-      export: false,
+    },
+  ];
+
+  const columns1 = [
+    { title: "Item Name", field: "iname" },
+    {
+      title: "Brand",
+      field: "brand",
+    },
+    {
+      title: "Category",
+      field: "cname",
+    },
+    {
+      title: "Quantity",
+      field: "quantity",
+      sort: "asc",
+    },
+    {
+      title: "Total Price",
+      field: "totalprice",
+    },
+    {
+      title: "Created At",
+      field: "createdAt",
     },
   ];
 
@@ -58,17 +85,23 @@ export default function ViewAssets() {
   //     { serialNo: 'DOM-2021-17/20', category: 'Electronics', itemName: 'Tube Light', quantity: '40', price: '100' },
   //     // More people...
   //   ]
-  // const checkArray = (arr) => {
-  //   console.log(typeof arr);
-  //   if (typeof arr == "object") {
-  //     return [];
-  //   } else {
-  //     return arr;
-  //   }
-  // };
+
+  // function saveFilters(tableRef) {
+  //   return function handler() {
+  //     const columns = tableRef?.current?.state.columns.map((column) =>
+  //       console.log('column:', column)
+  //         (
+  //           {
+  //             field: column.field,
+  //             filterValue: column.tableData.filterValue
+  //           }));
+  //     // console.log(JSON.stringify(columns, null, 2));
+  //   };
+  // }
+
   useEffect(() => {
     api.get("/item/entry").then((res) => {
-      // console.log(res.status);
+      console.log(res.status);
       console.log(res.data);
       setDatatable({
         rows: res.data.map((da) => ({
@@ -143,23 +176,48 @@ export default function ViewAssets() {
   //   "assets",
   //   dates.map((dat) => dat.format())
   // );
-  console.log("dates:", datatable);
+  console.log("dates:", dates);
 
   const downloadPdf = () => {
     const doc = new jsPDF();
 
-    doc.setFont("courier", "bold");
-    doc.text("DEPARTMENT OF MATHEMATICS", 63, 25);
-    doc.text("Anna University", 79, 34);
-
     doc.autoTable({
-      columns: datatable.columns
-        .map((col) => ({ ...col, datakey: col.field }))
-        .filter(),
+      columns: columns1.map(item => ({
+        ...item, header: item.title, dataKey: item.field
+      })),
       body: datatable.rows,
-    });
-
-    doc.save("Assets.pdf");
+      margin: { top: 61},
+      styles: {
+        overflow: 'linebreak',
+        fontSize: 12,
+        valign: 'middle'
+      },
+    })
+    
+    const pageCount = doc.internal.getNumberOfPages();
+    doc.setFont("courier", "bold");
+    doc.setFontSize(20)
+    for (var i = 1; i <= pageCount; i++) {
+      doc.setPage(i)
+      doc.addImage(annaUnivLogo, 'JPEG', 91.5, 12, 25, 25);
+      doc.text("DEPARTMENT OF MATHEMATICS", 53, 47);
+    }
+    doc.setFont("courier", "bold");
+    doc.setFontSize(15)
+    for (i = 1; i <= pageCount; i++) {
+      doc.setPage(i)
+      doc.text("List of Item Entries", 74, 55);
+    }
+    doc.setFont('helvetica', 'italic')
+    doc.setFontSize(12)
+    for (i = 1; i <= pageCount; i++) {
+      doc.setPage(i)
+      doc.text(String(i), doc.internal.pageSize.width / 2, 289, {
+        align: 'center'
+      })
+    }
+    doc.autoPrint();
+    doc.save("Department Of Matematics");
   };
 
   return (
@@ -212,24 +270,9 @@ export default function ViewAssets() {
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                {/* {checkArray(datatable.rows) ? (
-                  <MDBDataTableV5
-                    className="custo"
-                    hover
-                    entriesOptions={[5, 10, 15]}
-                    entries={5}
-                    pagesAmount={4}
-                    data={datatable}
-                    searchBottom={false}
-                    searchTop
-                    fullPagination
-                  />
-                ) : (
-                  <div>
-                    <h1>No data Found</h1>
-                  </div>
-                )} */}
+                {/* <button onClick={saveFilters(tableRef)}>Filters</button> */}
                 <MaterialTable
+                  // tableRef={tableRef}
                   icons={{
                     Filter: () => (
                       <span
@@ -247,11 +290,20 @@ export default function ViewAssets() {
                   options={{
                     showTitle: false,
                     filtering: true,
-                    exportButton: {
-                      csv: false,
-                      pdf: true,
-                    },
                   }}
+                  actions={[
+                    {
+                      icon: () => <div className="bg-gray-50 text-right">
+                        <button
+                          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+                        >
+                          Download
+                        </button>
+                      </div>,
+                      onClick: () => downloadPdf(),
+                      isFreeAction: true
+                    }
+                  ]}
                 />
                 {/* {checkArray(datatable.rows) ? (
                   <MaterialTable
@@ -269,15 +321,6 @@ export default function ViewAssets() {
                     <h1>No data Found</h1>
                   </div>
                 )} */}
-
-                {/* <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                  <button
-                    onClick={downloadPdf}
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Download as PDF
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import annaUnivLogo from "../images/anna_university_logo.svg";
 import { clearValuesOnLogout, getItemFromLocalStorage } from "../SecureLS";
+import ChangeLocationStatusModal from "./ChangeLocationStatusModal";
 
 const superintendentNavigation = [
   { name: "View Assets", href: "/ViewAssets", current: true },
@@ -35,12 +36,16 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [current, setCurrent] = useState(window.location.pathname);
+  const [show, setShow] = useState(false);
   // console.log(window.location.pathname);
 
   const role = getItemFromLocalStorage("Role");
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
+      {/* <ChangeLocationStatusModal
+        show={show}
+      /> */}
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-2">
@@ -223,6 +228,22 @@ export default function Navbar() {
                           </a>
                         )}
                       </Menu.Item> */}
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => setShow(true)}
+                            href="/"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 text-center"
+                            )}
+                          >
+                            <span className="text-md text-center text-grey-500">
+                              Change Password
+                            </span>
+                          </a>
+                        )}
+                      </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <a

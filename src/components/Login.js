@@ -5,20 +5,16 @@ import annaUnivLogo from "../images/anna_university_logo.svg";
 import dept from "../images/clg_dept.jpeg";
 import api from '../Axios';
 import { getItemFromLocalStorage, setItemOnLocalStorage } from '../SecureLS';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const nav = useNavigate();
-
     const[data, setData] =  useState({
         email:'',
         password:''
     })
 
-    console.log("nav:", nav );
     function login(e){
         e.preventDefault();
-        console.log(data);
+        // console.log(data);
         // axios.post("http://localhost:5000/user/login", data)
         api.post("/user/login", data)
         .then(res=>{
@@ -73,7 +69,10 @@ const Login = () => {
                         <label htmlFor="password" className="text-lg">Password</label>
                         <input type="password" id="password" name="password" onChange={(e)=> setData({...data, [e.target.name]:e.target.value})} placeholder="Password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
                     </div>
-                    <input type="submit" value="Log In" className="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8" />
+                    <div className="flex flex-col pt-3" onClick={()=>window.location.href='/forgetPassword'}>
+                        <a href="#" class="no-underline hover:underline text-right">Forget Password?</a>
+                    </div>
+                    <input type="submit" value="Log In" className="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-3" />
                 </form>
                 {/* <div className="text-center pt-12 pb-12">
                     <p>Don't have an account? <a href="register.html" className="underline font-semibold">Register here.</a></p>
