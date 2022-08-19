@@ -18,9 +18,9 @@ export default function ChangeLocationStatusModal(props) {
         .put(
           url,
           JSON.stringify({
-            status: modalData.status,
-            locationid: locId === "" ? null : locId,
-            staffid: staffid === "" ? null : staffid,
+            status: modalData.status==="notassigned"?"assigned":modalData.status,
+            locationid: locId === "" ? null : parseInt(locId),
+            staffid: staffid === "" ? null : parseInt(staffid),
           }),
           {
             headers: { "Content-Type": "application/json" },
@@ -32,6 +32,7 @@ export default function ChangeLocationStatusModal(props) {
               icon: "success",
               text: "Updated successfully",
             });
+            props.onUpdate(!props.flag);
           }
         })
         .catch(err=>{
@@ -49,7 +50,6 @@ export default function ChangeLocationStatusModal(props) {
         text: err.response.data.error,
       });
     }
-    props.onUpdate(!props.flag);
     props.onCloseDetails(false);
   }
 
@@ -151,7 +151,7 @@ export default function ChangeLocationStatusModal(props) {
                             className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm px-2 h-10 border-2 border-gray-300 rounded-md"
                           >
                             <option value="assigned">Assigned</option>
-                            <option value="notassigned">Not Assigned</option>
+                            {/* <option value="notassigned">Not Assigned</option> */}
                             <option value="condemned">Condemned</option>
                             <option value="missing">Missing</option>
                             <option value="spare">Spare</option>

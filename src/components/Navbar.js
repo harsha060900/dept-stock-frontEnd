@@ -5,6 +5,8 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import annaUnivLogo from "../images/anna_university_logo.svg";
 import { clearValuesOnLogout, getItemFromLocalStorage } from "../SecureLS";
 import ChangeLocationStatusModal from "./ChangeLocationStatusModal";
+import ChangePasswordModal from "./ChangePasswordModal";
+import profile from "../assets/profile.png"
 
 const superintendentNavigation = [
   { name: "View Assets", href: "/ViewAssets", current: true },
@@ -14,13 +16,14 @@ const superintendentNavigation = [
 ];
 
 const hodNavigation = [
+  { name: "Dashboard", href: "/Dashboard", current: false },
   { name: "View Assets", href: "/ViewAssets", current: true },
   { name: "Staff History", href: "/StaffHistoryTracker", current: false },
   { name: "Item History", href: "/ItemHistoryTracker", current: false },
   { name: "Add Staff", href: "/AddStaff", current: false },
+  { name: "Add User", href: "/AddUser", current: false },
   // { name: 'Items Entry', href: '/ItemsEntry', current: false },
   // { name: 'Add Category', href: '/AddCategory', current: false },
-  { name: "Dashboard", href: "/Dashboard", current: false },
 ];
 
 const assignerNavigation = [
@@ -37,9 +40,9 @@ function classNames(...classes) {
 export default function Navbar() {
   const [current, setCurrent] = useState(window.location.pathname);
   const [show, setShow] = useState(false);
-  // console.log(window.location.pathname);
-
   const role = getItemFromLocalStorage("Role");
+  const name = getItemFromLocalStorage("Name");
+  // console.log(window.location.pathname);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -48,6 +51,7 @@ export default function Navbar() {
       /> */}
       {({ open }) => (
         <>
+          <ChangePasswordModal show={show} onCloseDetails={setShow} />
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-2">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -168,7 +172,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 z-10" >
                 {/* <button
                   type="button"
                   className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -184,7 +188,7 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={profile}
                         alt=""
                       />
                     </Menu.Button>
@@ -209,39 +213,39 @@ export default function Navbar() {
                             )}
                           >
                             <h1 className="text-lg text-center font-bold">
-                              {role === "HOD"
-                                ? "HOD"
-                                : role === "superintendent"
-                                ? "Superintendent"
-                                : "Assigner"}
+                              {name}
                             </h1>
                           </div>
                         )}
                       </Menu.Item>
-                      {/* <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={() => setShow(true)}
-                            href="/"
+                            href="#"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700 text-center"
                             )}
                           >
-                            <span className="text-md text-center text-grey-500">
-                              Change Password
-                            </span>
+                            {role === "HOD"
+                              ? "HOD"
+                              : role === "superintendent"
+                              ? "Superintendent"
+                              : "Assigner"}
                           </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <div
+                            onClick={() => setShow(true)}
+                            className={classNames(
+                              active ? "bg-blue-100" : "",
+                              "block px-4 py-2 text-sm text-blue-700 text-center"
+                            )}
+                          >
+                            Change Password
+                          </div>
                         )}
                       </Menu.Item>
                       <Menu.Item>

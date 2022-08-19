@@ -12,6 +12,7 @@ import {
   Transferred,
 } from "./StatusBadges";
 import ChangeLocationStatusModal from "./ChangeLocationStatusModal";
+import MaterialTable from "material-table";
 
 export default function StatusTracker() {
   const [itemStatuses, setItemStatuses] = useState([]);
@@ -21,6 +22,38 @@ export default function StatusTracker() {
   const [modalData, setModalData] = useState([]);
   const [modalName, setModalName] = useState("");
   const [flag, setFlag] = useState(false);
+  const [datatable, setDatatable] = useState({});
+  const columns = [
+    { title: "ITEM ID", field: "itemid" },
+    {
+      title: "ITEM NAME",
+      field: "iname",
+    },
+    {
+      title: "CATEGORY",
+      field: "cate",
+    },
+    {
+      title: "LOCATION",
+      field: "loc",
+    },
+    {
+      title: "STAFF",
+      field: "staff",
+    },
+    {
+      title: "UPDATED AT",
+      field: "upAt",
+    },
+    {
+      title: "STATUS",
+      field: "status",
+    },
+    {
+      title: "CHANGE LOCATION/STATUS",
+      field: "locsta",
+    },
+  ];
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -78,11 +111,55 @@ export default function StatusTracker() {
 
   useEffect(() => {
     api.get(query).then((res) => {
-      setItemStatuses(res.data);
-      console.log(res.data);
+      setItemStatuses(res.data)
+      setDatatable({
+        rows: res.data.map((da) => ({
+          itemid:
+            "DOM/" +
+            `${
+              da.Itementry.Ledger.consumetype == "nonconsumable"
+                ? "NC"
+                : "C"
+            }` +
+            "/VOL" +
+            da.Itementry.Ledger.volumeno +
+            "/PG" +
+            da.Itementry.Ledger.pageno +
+            "/SNo" +
+            da.Itementry.Ledger.sno +
+            "/" +
+            da.Itementry.createdAt.substring(0, 4) +
+            "/" +
+            da.itemno +
+            "/" +
+            da.Itementry.quantity,
+          iname: da.Itementry.Item.name,
+          cate: da.Itementry.Item.Category.name,
+          loc: da.Location === null ? "---" : da.Location.name,
+          status: getStatusBadgeInTable(da.paststatus),
+          quantity: da.quantity,
+          totalprice: da.totalprice,
+          upAt: da.updatedAt.substring(0, 10),
+          staff:da.Staff === null ? "---" : da.Staff.name,
+          status:getStatusBadgeInTable(da.status),
+          locsta:(
+            <button
+              className="text-indigo-600 hover:text-indigo-900"
+              onClick={() => {
+                setShow(!show);
+                setModalData(da);
+              }}
+            >
+              Change
+            </button>
+            
+          )
+        })),
+      });
+      // console.log(res.data);
     });
   }, [query, status, flag]);
-
+console.log("data:", datatable);
   return (
     <>
       <ChangeLocationStatusModal
@@ -268,7 +345,20 @@ export default function StatusTracker() {
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="table-fixed min-w-full divide-y divide-gray-200">
+                <MaterialTable
+                  columns={columns}
+                  data={datatable.rows}
+                  options={{
+                    showTitle: false,
+                    headerStyle: {
+                      backgroundColor: "#c6c9d6",
+                      color: "#6b7280",
+                      fontWeight: "500px",
+                    },
+                    // filtering: true,
+                  }}
+                />
+                {/* <table className="table-fixed min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
                       <th
@@ -336,8 +426,8 @@ export default function StatusTracker() {
                           {item.Itementry.Ledger.volumeno}/PG
                           {item.Itementry.Ledger.pageno}/SNo
                           {item.Itementry.Ledger.sno}/
-                          {item.Itementry.createdAt.substring(0, 4)}/{item.itemno}/
-                          {item.Itementry.quantity}
+                          {item.Itementry.createdAt.substring(0, 4)}/
+                          {item.itemno}/{item.Itementry.quantity}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {item.Itementry.Item.name}
@@ -352,7 +442,7 @@ export default function StatusTracker() {
                           {item.Staff === null ? "---" : item.Staff.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {item.updatedAt.substring(0,10)}
+                          {item.updatedAt.substring(0, 10)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {getStatusBadgeInTable(item.status)}
@@ -392,7 +482,7 @@ export default function StatusTracker() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table> */}
               </div>
             </div>
           </div>

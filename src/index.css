@@ -40,3 +40,11 @@ code {
 .MuiIconButton-root:hover {
   background-color: rgba(0, 0, 0, 0) !important;
 }
+
+#cent{
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top:-50px;
+  margin-left:-50px;
+}

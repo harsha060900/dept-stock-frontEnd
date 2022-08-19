@@ -211,7 +211,15 @@ export default function Dashboard() {
     api
       .get(`/hod/charts/${y.getFullYear()}`)
       .then((res) => {
-        console.log("year:", res.data);
+        // console.log("year:", res.data);
+        var a = []
+        res.data.statuswisedata.map(x => a.push(x.status))
+        var b = []
+        res.data.statuswisedata.map(x => b.push(x.total))
+        var c = []
+        res.data.yearwisedata.map(x => c.push(x.year))
+        var d = []
+        res.data.yearwisedata.map(x => d.push(x.total))
         setTable({
           ...table,
           rows: res.data.recentdata.map((da) => ({
@@ -231,11 +239,11 @@ export default function Dashboard() {
         });
         setPie({
           ...pie,
-          labels: [res.data.statuswisedata.map((da) => [da.status])],
+          labels: a,
           datasets: [
             {
               label: "# of Votes",
-              data: [res.data.statuswisedata.map((da) => [da.total])],
+              data:b,
               backgroundColor: function (context) {
                 return palette[context.dataIndex % palette.length];
               },
@@ -246,10 +254,10 @@ export default function Dashboard() {
         });
         setLine({
             ...line,
-            labels: [res.data.yearwisedata.map((da) => [da.year])],
+            labels:c,
             datasets: [
                 {
-                  data: [res.data.yearwisedata.map((da) => [da.total])],
+                  data:d,
                   borderColor: "rgb(255, 99, 132)",
                   fill: false,
                 },
@@ -268,12 +276,14 @@ export default function Dashboard() {
   return (
     <>
       {load ? (
+        <div id="cent">
         <Loader
-          type="spinner-cub"
+          type="box-rectangular"
           bgColor={"red"}
           color={"#black"}
           size={100}
         />
+        </div>
       ) : (
         <>
           <div>
@@ -317,10 +327,10 @@ export default function Dashboard() {
                   </div>
                   <div class="ml-6">
                     <h3 class="mb-1 leading-5 text-white font-bold text-2xl">
-                      ₹ {card.non_consume}
+                      Non-Consumable Items
                     </h3>
                     <p class="py-1.5 text-white text-sm tracking-normal font-semibold text-xl leading-5">
-                      ₹ 5,000
+                        ₹ {card.non_consume}
                     </p>
                   </div>
                 </div>
@@ -367,7 +377,7 @@ export default function Dashboard() {
 
             <div className="pb-4 flex justify-center items-center">
               <div className="w-8/12">
-                <Pie options={options2} data={data3} />
+                <Pie options={options2} data={pie} />
               </div>
             </div>
           </div>

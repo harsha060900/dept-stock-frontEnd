@@ -16,6 +16,8 @@ import { getItemFromLocalStorage, setItemOnLocalStorage } from "./SecureLS";
 import { useEffect } from "react";
 import api from "./Axios";
 import ForgetPassword from "./components/ForgetPassword";
+import AddUser from "./components/AddUser";
+
 function App() {
   const role = getItemFromLocalStorage("Role");
 
@@ -63,8 +65,7 @@ function App() {
                   return (
                     <>
                       <Route path="/ViewAssets" element={<ViewAssets />} />
-                      {/* <Route path="/AddCategory" element={<AddCategory />} /> */}
-                      {/* <Route path="/ItemsEntry" element={<ItemsEntry />} /> */}
+                      <Route path="/AddUser" element={<AddUser />} />
                       <Route path="/Dashboard" element={<Dashboard />} />
                       <Route path="/AddStaff" element={<AddStaff />} />
                       <Route path="/ItemHistoryTracker" element={<ItemHistoryTracker />} />

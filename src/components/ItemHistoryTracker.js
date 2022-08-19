@@ -64,30 +64,30 @@ export default function ItemHistoryTracker() {
 
   useEffect(() => {
     api.get("/item/status/all").then((res) => {
-      console.log(res.status);
-      console.log(res.data);
+      // console.log(res.status);
+      // console.log(res.data);
       setItems(res.data);
     });
     if (url !== "") {
       api.get(url).then((res) => {
-        console.log(res.status);
+        // console.log(res.status);
         console.log(res.data);
         setItemHistory(res.data);
         setDatatable({
           rows: res.data.map((da) => ({
-            sid: da.Staff.regid,
-            sname: da.Staff.name,
-            loc: da.Location.name,
+            sid: da.Staff === null ? "---" : da.Staff.regid,
+            sname: da.Staff === null ? "---" : da.Staff.name,
+            loc: da.Location === null ? "---" : da.Location.name,
             status: getStatusBadgeInTable(da.paststatus),
             quantity: da.quantity,
             totalprice: da.totalprice,
-            upAt: da.updatedAt,
+            upAt: da.updatedAt.substring(0, 10),
           })),
         });
       });
     }
   }, [flag, url]);
-
+  console.log("datatable:", datatable);
   return (
     <>
       <div className="flow-root max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">

@@ -79,6 +79,7 @@ const ForgetPassword = () => {
                 onChange={(e) => setData({ [e.target.name]: e.target.value })}
                 id="email"
                 placeholder="your@email.com"
+                required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -87,6 +88,7 @@ const ForgetPassword = () => {
               type="submit"
               value="Submit"
               className="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
+              // disabled
             />
           </form>
           {/* <div className="text-center pt-12 pb-12">
